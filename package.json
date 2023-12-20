@@ -10,9 +10,13 @@
   },
   "dependencies": {
     "@prisma/client": "^5.7.1",
+    "add": "^2.0.6",
+    "clsx": "^2.0.0",
     "next": "14.0.4",
     "react": "^18",
-    "react-dom": "^18"
+    "react-dom": "^18",
+    "sharp": "^0.33.1",
+    "swiper": "^11.0.5"
   },
   "devDependencies": {
     "@types/node": "^20",

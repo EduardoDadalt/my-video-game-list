@@ -17,8 +17,18 @@ model User {
   password  String
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-  
-  Review    Review[]
+
+  Review Review[]
+}
+
+model GameImage {
+  id   String @id @default(cuid())
+  data Bytes
+
+  gameId String
+  Game   Game   @relation(fields: [gameId], references: [id])
+
+  GamesWithPoster Game? @relation("poster")
 }
 
 model Game {
@@ -45,6 +55,11 @@ model Game {
 
   Review    Review[]
   Character Character[]
+
+  PosterId String?    @unique
+  Poster   GameImage? @relation("poster", fields: [PosterId], references: [id])
+
+  Images GameImage[]
 
   @@index([deleted])
 }

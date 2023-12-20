@@ -1,0 +1,11 @@
+.swiper-button-disabled{
+  display: none;
+  cursor: not-allowed;
+}
+
+.swiper-slide {
+  width: auto;
+}
+.swiper-button-next{
+    
+}

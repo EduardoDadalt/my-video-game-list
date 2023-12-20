@@ -11,3 +11,6 @@ body,
 #__next {
   @apply flex flex-col;
 }
+main {
+  @apply flex-1;
+}

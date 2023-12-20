@@ -1,0 +1,130 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        String   @id @default(cuid())
+  name      String
+  email     String   @unique
+  password  String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  
+  Review    Review[]
+}
+
+model Game {
+  id      String @id @default(cuid())
+  name    String
+  sinopse String @db.Text
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  releaseDate DateTime?
+
+  deleted Boolean @default(false)
+
+  publisherId String
+  Publisher   Publisher @relation(fields: [publisherId], references: [id])
+
+  developerId String
+  Developer   Developer @relation(fields: [developerId], references: [id])
+
+  Categories Category[]
+
+  Platform Platform[]
+
+  Review    Review[]
+  Character Character[]
+
+  @@index([deleted])
+}
+
+model Publisher {
+  id   String @id @default(cuid())
+  name String
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  deleted Boolean @default(false)
+
+  Games Game[]
+
+  @@index([deleted])
+}
+
+model Developer {
+  id   String @id @default(cuid())
+  name String
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  deleted Boolean @default(false)
+
+  Games Game[]
+
+  @@index([deleted])
+}
+
+model Category {
+  id   String @id @default(cuid())
+  name String
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  Games Game[]
+}
+
+model Platform {
+  id   String @id @default(cuid())
+  name String
+
+  Games Game[]
+}
+
+model Review {
+  id      String @id @default(cuid())
+  title   String
+  content String @db.Text
+  rating  Int
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  published Boolean @default(false)
+
+  gameId String
+  Game   Game   @relation(fields: [gameId], references: [id])
+
+  userId String
+  User   User   @relation(fields: [userId], references: [id])
+
+  @@index([published])
+}
+
+model Character {
+  id          String @id @default(cuid())
+  name        String
+  Description String @db.Text
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  deleted Boolean @default(false)
+
+  Games Game[]
+
+  @@index([deleted])
+}

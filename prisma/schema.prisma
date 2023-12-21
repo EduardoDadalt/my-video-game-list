@@ -56,8 +56,8 @@ model Game {
   Review    Review[]
   Character Character[]
 
-  PosterId String?    @unique
-  Poster   GameImage? @relation("poster", fields: [PosterId], references: [id])
+  posterId String?    @unique
+  Poster   GameImage? @relation("poster", fields: [posterId], references: [id])
 
   Images GameImage[]
 

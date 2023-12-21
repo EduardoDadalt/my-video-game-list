@@ -1,20 +1,25 @@
 import Image from "next/image";
 import Link from "next/link";
 
+export type GameCardProps = {
+  id: string;
+  name: string;
+  posterId: string | null;
+};
+
 export default function GameCard({
-  game: { id, name, PosterId },
+  game: { id, name, posterId },
 }: {
-  game: {
-    id: string;
-    name: string;
-    PosterId: string | null;
-  };
+  game: GameCardProps;
 }) {
   return (
-    <Link href={`/game/${id}`}>
-      <div className="h-52 w-36 relative rounded-lg overflow-hidden">
+    <Link
+      href={`/game/${id}`}
+      className=""
+    >
+      <div className="h-52 w-36 relative overflow-hidden">
         <Image
-          src={`/game/${id}/img/${PosterId}`}
+          src={`/game/${id}/img/${posterId}`}
           alt={`Image of game ${name}`}
           fill
         />

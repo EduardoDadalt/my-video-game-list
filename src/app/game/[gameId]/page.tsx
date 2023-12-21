@@ -12,9 +12,9 @@ export default async function GamePage({
   return (
     <main className="flex flex-row">
       <div className="flex-1">
-        {game.PosterId && (
+        {game.posterId && (
           <Image
-            src={`/game/${gameId}/img/${game.PosterId}`}
+            src={`/game/${gameId}/img/${game.posterId}`}
             alt={`Poster of game ${game.name}`}
             height={300}
             width={200}
@@ -25,4 +25,12 @@ export default async function GamePage({
       <div className="flex-9"></div>
     </main>
   );
+}
+
+export async function generateStaticParams() {
+  const games = await database.game.findMany({ select: { id: true } });
+
+  return games.map((game) => ({
+    gameId: game.id,
+  }));
 }

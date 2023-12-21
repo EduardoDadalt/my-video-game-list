@@ -1,30 +1,47 @@
 "use client";
 
-import GameCard from "@/components/gameCard";
+import GameCard, { GameCardProps } from "@/components/gameCard";
+import { useCallback, useState } from "react";
 import "swiper/css";
-import "swiper/css/pagination";
 import "swiper/css/navigation";
-import { Pagination, Navigation } from "swiper/modules";
-import { Swiper, SwiperSlide } from "swiper/react";
+import "swiper/css/pagination";
+import { Pagination } from "swiper/modules";
+import { Swiper, SwiperClass, SwiperSlide } from "swiper/react";
 import "./style.css";
-export default function CarouselOfGames({
-  games,
-}: {
-  games: { id: string; name: string; PosterId: string | null }[];
-}) {
+
+export default function CarouselOfGames({ games }: { games: GameCardProps[] }) {
+  const [swiperRef, setSwiperRef] = useState<SwiperClass>();
+
+  const handlePrevious = useCallback(() => {
+    swiperRef?.slidePrev();
+  }, [swiperRef]);
+
+  const handleNext = useCallback(() => {
+    swiperRef?.slideNext();
+  }, [swiperRef]);
+
   return (
-    <Swiper
-      slidesPerView="auto"
-      spaceBetween={10}
-      navigation
-      pagination={true}
-      modules={[Pagination, Navigation]}
-    >
-      {games.map((game) => (
-        <SwiperSlide key={game.id}>
-          <GameCard game={game} />
-        </SwiperSlide>
-      ))}
-    </Swiper>
+    <div className="relative flex flex-row items-stretch">
+      <button className="swiper-button-prev" onClick={handlePrevious}></button>
+      <Swiper
+        onSwiper={setSwiperRef}
+        slidesPerView="auto"
+        spaceBetween={10}
+        pagination={true}
+        loop={true}
+        modules={[Pagination]}
+        className="flex-1"
+      >
+        {games.map((game) => (
+          <SwiperSlide
+            key={game.id}
+            className="first:rounded-l-none last:rounded-r-none rounded-lg overflow-hidden"
+          >
+            <GameCard game={game} />
+          </SwiperSlide>
+        ))}
+      </Swiper>
+      <button className="swiper-button-next" onClick={handleNext}></button>
+    </div>
   );
 }

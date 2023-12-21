@@ -1,4 +1,4 @@
-.swiper-button-disabled{
+.swiper-button-disabled {
   display: none;
   cursor: not-allowed;
 }
@@ -6,6 +6,22 @@
 .swiper-slide {
   width: auto;
 }
-.swiper-button-next{
-    
+
+.swiper-button-prev {
+  left: 0;
+  @apply rounded-l-lg;
+}
+.swiper-button-next {
+  right: 0;
+  @apply rounded-r-lg;
+}
+
+.swiper-button-prev,
+.swiper-button-next {
+  margin-top: 0;
+  color: white;
+  position: relative;
+  height: auto;
+  width: 40px;
+  @apply bg-gray-900 bg-opacity-20;
 }

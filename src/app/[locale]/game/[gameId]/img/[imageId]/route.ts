@@ -1,7 +1,5 @@
-import database from "@/lib/database";
-import { Prisma, PrismaClient } from "@prisma/client";
+import { PrismaClient } from "@prisma/client";
 import { NextRequest, NextResponse } from "next/server";
-import sharp from "sharp";
 
 export async function GET(
   req: NextRequest,

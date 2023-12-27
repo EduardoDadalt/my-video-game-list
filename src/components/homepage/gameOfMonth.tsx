@@ -1,16 +1,20 @@
 import database from "@/lib/database";
 import CarouselOfGames from "../carouselOfGames";
 import { GameCardProps } from "../gameCard";
+import { getDictionary } from "@/app/[locale]/dictionaries";
 
-export default async function GameOfMonth() {
+export default async function GameOfMonth({ locale }: { locale: string }) {
+  const dictionary = await getDictionary(locale);
+
   const games = await getGamesOfMonth();
   return (
     <section className="mx-6 lg:mx-20 space-y-2 border rounded-xl p-4 pt-2">
-      <h1 className="text-xl font-bold ">Games of Month</h1>
+      <h1 className="text-xl font-bold ">{dictionary.home.gameOfMonth}</h1>
       <CarouselOfGames games={[...games, ...games, ...games, ...games]} />
     </section>
   );
 }
+
 export async function getGamesOfMonth(): Promise<GameCardProps[]> {
   const dateNow = new Date();
 

@@ -24,8 +24,7 @@ export function middleware(request: NextRequest) {
 
   // Redirect if there is no locale
   const locale = getLocale(request);
-  if (locale === defaultLocale) return;
-  
+
   request.nextUrl.pathname = `/${locale}${pathname}`;
   // e.g. incoming request is /products
   // The new URL is now /en-US/products
@@ -35,7 +34,7 @@ export function middleware(request: NextRequest) {
 export const config = {
   matcher: [
     // Skip all internal paths (_next)
-    "/((?!_next).*)",
+    "/((?!_next|game\/[a-zA-Z0-9]+\/img\/[a-zA-Z0-9]+).*)",
     // Optional: only run on root (/) URL
     // '/'
   ],

@@ -1,8 +1,8 @@
 import { match } from "@formatjs/intl-localematcher";
 import Negotiator from "negotiator";
 import { NextRequest } from "next/server";
+import { locales } from "./containts/locales";
 
-const locales = ["en", "pt"];
 const defaultLocale = "en";
 
 function getLocale(request: Request) {
@@ -34,7 +34,7 @@ export function middleware(request: NextRequest) {
 export const config = {
   matcher: [
     // Skip all internal paths (_next)
-    "/((?!_next|game\/[a-zA-Z0-9]+\/img\/[a-zA-Z0-9]+).*)",
+    "/((?!_next|api).*)",
     // Optional: only run on root (/) URL
     // '/'
   ],

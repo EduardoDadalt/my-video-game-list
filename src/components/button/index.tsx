@@ -8,7 +8,12 @@ export type ButtonProps = {
   children: React.ReactNode;
 } & ButtonHTMLAttributes<HTMLButtonElement>;
 
-export default function Button({ btnStyle, children, ...props }: ButtonProps) {
+export default function Button({
+  btnStyle,
+  className,
+  children,
+  ...props
+}: ButtonProps) {
   function getClassByType(btnStyle: ButtonStyles | undefined) {
     switch (btnStyle) {
       case "contained":
@@ -23,7 +28,8 @@ export default function Button({ btnStyle, children, ...props }: ButtonProps) {
     <button
       className={clsx(
         "rounded-md px-2 py-1 transition-colors duration-300 shadow-2xl",
-        getClassByType(btnStyle)
+        getClassByType(btnStyle),
+        className
       )}
       {...props}
     >

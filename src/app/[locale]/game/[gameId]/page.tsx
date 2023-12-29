@@ -15,7 +15,7 @@ export default async function GamePage({
       <div className="flex-1">
         {game.posterId && (
           <Image
-            src={`/game/${gameId}/img/${game.posterId}`}
+            src={`/api/game/${gameId}/img/${game.posterId}`}
             alt={`Poster of game ${game.name}`}
             height={300}
             width={200}

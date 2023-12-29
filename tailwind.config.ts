@@ -12,6 +12,10 @@ const config: Config = {
       colors: {
         primary: colors.rose,
       },
+      fontFamily: {
+        display: ["var(--font-display)", "sans-serif"],
+        body: ["var(--font-body)", "sans-serif"],
+      },
     },
   },
   plugins: [],

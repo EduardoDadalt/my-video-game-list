@@ -3,14 +3,23 @@
 @tailwind utilities;
 
 html,
-body,
-#__next {
-  @apply h-screen w-screen m-0 p-0;
+body {
+  @apply h-screen w-screen m-0 p-0 font-body;
 }
 
-#__next {
+body {
   @apply flex flex-col;
 }
 main {
   @apply flex-1;
+}
+
+.link {
+  @apply text-blue-600 hover:text-blue-700;
+}
+
+*,
+*:focus,
+*:hover {
+  outline: none;
 }

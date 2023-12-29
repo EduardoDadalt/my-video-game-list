@@ -3,6 +3,14 @@ const en: Dictionary = {
   home: {
     gameOfMonth: "Games of the month",
   },
+  login: {
+    title: "Login",
+    username: "Username",
+    password: "Password",
+    submit: "Submit",
+    forgotPassword: "Forgot password?",
+    register: "Register",
+  },
 };
 
 export default en;

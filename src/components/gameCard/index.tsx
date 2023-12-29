@@ -13,13 +13,10 @@ export default function GameCard({
   game: GameCardProps;
 }) {
   return (
-    <Link
-      href={`/game/${id}`}
-      className=""
-    >
+    <Link href={`/game/${id}`} className="">
       <div className="h-52 w-36 relative overflow-hidden">
         <Image
-          src={`/game/${id}/img/${posterId}`}
+          src={`/api/game/${id}/img/${posterId}`}
           alt={`Image of game ${name}`}
           fill
         />

@@ -1,7 +1,7 @@
 import database from "@/lib/database";
 import CarouselOfGames from "../carouselOfGames";
 import { GameCardProps } from "../gameCard";
-import { getDictionary } from "@/app/[locale]/dictionaries";
+import { getDictionary } from "@/dictionaries/dictionaries";
 
 export default async function GameOfMonth({ locale }: { locale: string }) {
   const dictionary = await getDictionary(locale);

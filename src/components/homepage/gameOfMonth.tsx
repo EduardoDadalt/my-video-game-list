@@ -36,7 +36,7 @@ export async function getGamesOfMonth(): Promise<GameCardProps[]> {
   g."posterId"
 FROM
   "Game" g
-  LEFT JOIN "Review" r ON g.id = r."gameId"
+  LEFT JOIN "Rating" r ON g.id = r."gameId"
 WHERE
    g."releaseDate" BETWEEN ${dataInicioMes} AND ${dataFinalMes}
 GROUP BY

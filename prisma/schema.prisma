@@ -18,7 +18,7 @@ model User {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  Review Review[]
+  Rating Rating[]
 }
 
 model GameImage {
@@ -53,13 +53,14 @@ model Game {
 
   Platform Platform[]
 
-  Review    Review[]
   Character Character[]
 
   posterId String?    @unique
   Poster   GameImage? @relation("poster", fields: [posterId], references: [id])
 
   Images GameImage[]
+
+  Rating Rating[]
 
   @@index([deleted])
 }
@@ -109,22 +110,42 @@ model Platform {
   Games Game[]
 }
 
-model Review {
-  id      String @id @default(cuid())
-  title   String
-  content String @db.Text
-  rating  Int
+enum StatusRating {
+  Playing
+  Finished
+  Dropped
+  PlanToPlay
+}
+
+model Rating {
+  id     String       @id @default(cuid())
+  rating Int
+  status StatusRating
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-
-  published Boolean @default(false)
 
   gameId String
   Game   Game   @relation(fields: [gameId], references: [id])
 
   userId String
   User   User   @relation(fields: [userId], references: [id])
+
+  Review Review?
+}
+
+model Review {
+  id          String @id @default(cuid())
+  title       String
+  description String @db.Text
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  published Boolean @default(false)
+
+  ratingId String @unique
+  Rating   Rating @relation(fields: [ratingId], references: [id])
 
   @@index([published])
 }

@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import Image from "next/image";
 import { Metadata } from "next";
 import { getDictionary } from "@/dictionaries/dictionaries";
+import Link from "next/link";
 
 export default async function GamePage({
   params: { gameId, locale },
@@ -12,7 +13,7 @@ export default async function GamePage({
   const dictionary = await getDictionary(locale);
   const game = await database.game.findUnique({
     where: { id: gameId },
-    include: { Categories: true },
+    include: { Categories: true, Publisher: true },
   });
   const {
     _avg: { rating: score },
@@ -23,36 +24,42 @@ export default async function GamePage({
 
   if (!game) return notFound();
   return (
-    <main className="flex flex-col md:flex-row px-4 sm:px-12 md:px-24 lg:px-32">
+    <main className="flex flex-col">
       <h1 className="text-lg font-bold p-2">{game.name}</h1>
-      <div className="md:flex-1 flex">
-        <Image
-          src={`/api/game/${gameId}/img/${game.posterId}`}
-          alt={`Poster of game ${game.name}`}
-          height={300}
-          width={200}
-          className="object-bottom object-cover flex-1 h-56"
-        />
-        <div className="flex-1 p-2 flex-col">
-          <div className="rounded border shadow">
-            <div className="font-bold font-display">Nota</div>
-            <div>{score ?? 0}</div>
-          </div>{" "}
-          <div className="rounded border shadow">
-            <div className="font-bold font-display">Categorias</div>
-            <div>
-              {game.Categories.map((category) => category.name).join(", ")}
-            </div>
+      <div className="flex flex-col sm:flex-row">
+        <div className="flex-1">
+          <Image
+            src={`/api/game/${gameId}/img/${game.posterHorizontalId}`}
+            height={200}
+            width={300}
+            alt="Poster"
+            className="w-full h-auto object-cover sm:hidden max-h-[45vh]"
+          />
+          <Image
+            src={`/api/game/${gameId}/img/${game.posterVerticalId}`}
+            alt={`Poster of game ${game.name}`}
+            height={300}
+            width={200}
+            className="object-bottom object-cover max-h-[300px] hidden sm:block"
+          />
+          <div className="flex flex-row flex-wrap">
+            <div>Nota: {score ?? 0}</div>
+            <button>Adicionar Nota</button>
           </div>
+          <div>
+            Publisher:{" "}
+            <Link href={`/publisher/${game.publisherId}`} className="link">
+              {game.Publisher.name}
+            </Link>
+          </div>
+        </div>
+        <div className="p-4 flex-[2]">
+          <h2 className="font-display font-bold">Sinopse</h2>
+          <div className="whitespace-pre-wrap">{game.sinopse}</div>
         </div>
       </div>
 
-      <div className="md:flex-9">
-        <div>
-          <h2>Sinopse</h2>
-          {game.sinopse}
-        </div>
-      </div>
+      <div className="md:flex-9"></div>
     </main>
   );
 }

@@ -28,7 +28,8 @@ model GameImage {
   gameId String
   Game   Game   @relation(fields: [gameId], references: [id])
 
-  GamesWithPoster Game? @relation("poster")
+  GamesWithPosterHorizontal Game? @relation("posterHorizontal")
+  GamesWithPosterVertical   Game? @relation("posterVertical")
 }
 
 model Game {
@@ -55,8 +56,11 @@ model Game {
 
   Character Character[]
 
-  posterId String?    @unique
-  Poster   GameImage? @relation("poster", fields: [posterId], references: [id])
+  posterHorizontalId String?    @unique
+  PosterHorizontal   GameImage? @relation("posterHorizontal", fields: [posterHorizontalId], references: [id])
+
+  posterVerticalId String?    @unique
+  PosterVertical   GameImage? @relation("posterVertical", fields: [posterVerticalId], references: [id])
 
   Images GameImage[]
 

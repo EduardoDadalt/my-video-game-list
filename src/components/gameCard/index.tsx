@@ -4,11 +4,11 @@ import Link from "next/link";
 export type GameCardProps = {
   id: string;
   name: string;
-  posterId: string | null;
+  posterVerticalId: string | null;
 };
 
 export default function GameCard({
-  game: { id, name, posterId },
+  game: { id, name, posterVerticalId },
 }: {
   game: GameCardProps;
 }) {
@@ -16,7 +16,7 @@ export default function GameCard({
     <Link href={`/game/${id}`} className="">
       <div className="h-52 w-36 relative overflow-hidden">
         <Image
-          src={`/api/game/${id}/img/${posterId}`}
+          src={`/api/game/${id}/img/${posterVerticalId}`}
           alt={`Image of game ${name}`}
           fill
         />

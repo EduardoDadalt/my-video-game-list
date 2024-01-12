@@ -3,7 +3,7 @@ import clsx from "clsx";
 import { Metadata } from "next";
 import { Open_Sans, Poppins } from "next/font/google";
 import "./globals.css";
-import { locales } from "@/containts/locales";
+import { locales } from "@/constants/locales";
 
 const poppins = Poppins({
   weight: ["400", "600", "700"],

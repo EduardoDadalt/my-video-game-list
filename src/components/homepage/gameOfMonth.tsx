@@ -19,10 +19,15 @@ export async function getGamesOfMonth(): Promise<GameCardProps[]> {
   const dateNow = new Date();
 
   const dataInicioMes = new Date(
-    Date.UTC(dateNow.getFullYear(), dateNow.getMonth(), 1)
+    dateNow.getFullYear(),
+    dateNow.getUTCMonth(),
+    1
   );
+
   const dataFinalMes = new Date(
-    Date.UTC(dateNow.getFullYear(), dateNow.getMonth() + 1, 0)
+    dateNow.getFullYear(),
+    dateNow.getUTCMonth() + 1,
+    0
   );
 
   const games: GameCardProps[] = await database.$queryRaw`SELECT

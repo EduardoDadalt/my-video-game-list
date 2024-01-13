@@ -11,6 +11,14 @@ const en: Dictionary = {
     forgotPassword: "Forgot password?",
     register: "Register",
   },
+  gamePage: {
+    addToList: "Add to list",
+    score: "Score",
+    publisher: "Publisher",
+    developer: "Developer",
+    releaseDate: "Release date",
+    platform: "Platform",
+  },
 };
 
 export default en;

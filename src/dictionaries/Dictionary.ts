@@ -11,4 +11,12 @@ type Dictionary = {
     forgotPassword: string;
     register: string;
   };
+  gamePage: {
+    addToList: string;
+    score: string;
+    publisher: string;
+    developer: string;
+    releaseDate: string;
+    platform: string;
+  };
 };

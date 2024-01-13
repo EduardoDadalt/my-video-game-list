@@ -4,7 +4,7 @@
 
 html,
 body {
-  @apply h-screen w-screen m-0 p-0 font-body;
+  @apply h-full w-full m-0 p-0 font-body;
 }
 
 body {

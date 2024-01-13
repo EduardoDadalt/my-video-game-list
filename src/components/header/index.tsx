@@ -11,7 +11,7 @@ export default function Header() {
     <header className="p-2 flex items-center justify-between">
       <Image src={menuImg} height={20} width={20} alt="Menu" />
       <Link href={"/"}>
-        <h1>MyVideoGameList</h1>
+        <h1 className="font-display">MyVideoGameList</h1>
       </Link>
 
       {isLogged ? (

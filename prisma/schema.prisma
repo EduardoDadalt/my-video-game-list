@@ -47,8 +47,7 @@ model Game {
   publisherId String
   Publisher   Publisher @relation(fields: [publisherId], references: [id])
 
-  developerId String
-  Developer   Developer @relation(fields: [developerId], references: [id])
+  Developers Developer[]
 
   Categories Category[]
 

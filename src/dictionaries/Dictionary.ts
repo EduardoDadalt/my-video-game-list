@@ -15,8 +15,10 @@ type Dictionary = {
     addToList: string;
     score: string;
     publisher: string;
-    developer: string;
+    developers: string;
     releaseDate: string;
     platform: string;
+    showMore: string;
+    showLess: string;
   };
 };

@@ -15,9 +15,11 @@ const pt: Dictionary = {
     addToList: "Adicionar à lista",
     score: "Nota",
     publisher: "Publicadora",
-    developer: "Desenvolvedora",
+    developers: "Desenvolvedora",
     releaseDate: "Data de lançamento",
     platform: "Plataforma",
+    showMore: "Mostrar mais",
+    showLess: "Mostrar menos",
   },
 };
 

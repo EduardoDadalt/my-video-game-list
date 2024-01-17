@@ -15,9 +15,11 @@ const en: Dictionary = {
     addToList: "Add to list",
     score: "Score",
     publisher: "Publisher",
-    developer: "Developer",
+    developers: "Developer",
     releaseDate: "Release date",
     platform: "Platform",
+    showMore: "Show more",
+    showLess: "Show less",
   },
 };
 

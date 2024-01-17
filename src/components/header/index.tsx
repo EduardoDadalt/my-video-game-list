@@ -1,11 +1,14 @@
+"use client";
 import Image from "next/image";
 import Link from "next/link";
 
 import menuImg from "../../../public/icons/menu.svg";
 import userImg from "../../../public/icons/user.svg";
 import Button from "../button";
+
 export default function Header() {
-  const isLogged = false; // TODO: implementar lógica de login
+  // const session = getServerSession();
+  const session = null;
 
   return (
     <header className="p-2 flex items-center justify-between">
@@ -14,7 +17,7 @@ export default function Header() {
         <h1 className="font-display">MyVideoGameList</h1>
       </Link>
 
-      {isLogged ? (
+      {!!session ? (
         <Image
           src={userImg}
           height={20}

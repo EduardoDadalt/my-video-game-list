@@ -1,5 +1,6 @@
 import { getDictionary } from "@/dictionaries/dictionaries";
 import database from "@/lib/database";
+import { Metadata } from "next";
 import Image from "next/image";
 
 export default async function GameImagesPage({
@@ -29,3 +30,7 @@ export default async function GameImagesPage({
     </main>
   );
 }
+
+export const metadata: Metadata = {
+  title: "Game Images",
+};

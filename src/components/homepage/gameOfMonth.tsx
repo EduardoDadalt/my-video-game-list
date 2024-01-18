@@ -33,16 +33,16 @@ export async function getGamesOfMonth(): Promise<GameCardProps[]> {
   const games: GameCardProps[] = await database.$queryRaw`SELECT
   g.id,
   g.name,
-  g."posterVerticalId"
+  g.posterVerticalId
 FROM
-  "Game" g
-  LEFT JOIN "Rating" r ON g.id = r."gameId"
+  Game g
+  LEFT JOIN Rating r ON g.id = r.gameId
 WHERE
-   g."releaseDate" BETWEEN ${dataInicioMes} AND ${dataFinalMes}
+   g.releaseDate BETWEEN ${dataInicioMes} AND ${dataFinalMes}
 GROUP BY
   g.id,
   g.name,
-  g."posterVerticalId"
+  g.posterVerticalId
 ORDER BY
   coalesce(AVG(r.rating),0) DESC`;
 

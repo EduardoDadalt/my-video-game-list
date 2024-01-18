@@ -6,8 +6,9 @@ generator client {
 }
 
 datasource db {
-  provider = "postgresql"
-  url      = env("DATABASE_URL")
+  provider     = "mysql"
+  url          = env("DATABASE_URL")
+  relationMode = "prisma"
 }
 
 model Account {
@@ -27,6 +28,7 @@ model Account {
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@unique([provider, providerAccountId])
+  @@index([userId])
 }
 
 model Session {
@@ -35,6 +37,8 @@ model Session {
   userId       String
   expires      DateTime
   user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
 }
 
 model User {
@@ -63,10 +67,12 @@ model GameImage {
   data Bytes
 
   gameId String
-  Game   Game   @relation(fields: [gameId], references: [id])
+  Game   Game   @relation(fields: [gameId], references: [id], onDelete: NoAction, onUpdate: NoAction)
 
   GamesWithPosterHorizontal Game? @relation("posterHorizontal")
   GamesWithPosterVertical   Game? @relation("posterVertical")
+
+  @@index([gameId])
 }
 
 model Game {
@@ -103,6 +109,7 @@ model Game {
   Rating Rating[]
 
   @@index([deleted])
+  @@index([publisherId])
 }
 
 model Publisher {
@@ -172,6 +179,9 @@ model Rating {
   User   User   @relation(fields: [userId], references: [id])
 
   Review Review?
+
+  @@index([gameId])
+  @@index([userId])
 }
 
 model Review {
@@ -193,7 +203,7 @@ model Review {
 model Character {
   id          String @id @default(cuid())
   name        String
-  description String @default("") @db.Text
+  description String @db.Text
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt

@@ -1,6 +1,6 @@
 import { getDictionary } from "@/dictionaries/dictionaries";
 import database from "@/lib/database";
-import { hashPassword } from "@/util/cripto";
+import { hashPassword, verifyPassword } from "@/util/cripto";
 import { PrismaAdapter } from "@auth/prisma-adapter";
 import NextAuth, { AuthOptions } from "next-auth";
 import { Adapter } from "next-auth/adapters";
@@ -37,8 +37,7 @@ export const authOptions: AuthOptions = {
           password: z
             .string({ required_error: errors.passwordRequired })
             .min(3, { message: errors.passwordMinLength })
-            .max(100, { message: errors.passwordMaxLength })
-            .transform(hashPassword),
+            .max(100, { message: errors.passwordMaxLength }),
         });
         const { username, password } = loginSchema.parse(credentials);
 
@@ -46,8 +45,8 @@ export const authOptions: AuthOptions = {
           where: { name: username },
         });
 
-        if (!user) throw new Error(errors.userNotFound);
-        if (user.password !== password)
+        if (!user || !user.hashedPassword) throw new Error(errors.userNotFound);
+        if (!(await verifyPassword(user.hashedPassword, password)))
           throw new Error(errors.userOrPasswordNotMatch);
 
         return user;

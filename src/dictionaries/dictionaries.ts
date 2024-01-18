@@ -1,6 +1,6 @@
 import "server-only";
 
-const dictionaries: {
+export const dictionaries: {
   en: () => Promise<Dictionary>;
   [key: string]: () => Promise<Dictionary>;
 } = {

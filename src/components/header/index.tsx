@@ -27,10 +27,10 @@ export default function Header() {
         />
       ) : (
         <div className="flex gap-2">
-          <Link href={"/login"}>
+          <Link href={"/auth/login"}>
             <Button>Login</Button>
           </Link>
-          <Link href={"/signup"}>
+          <Link href={"/auth/register"}>
             <Button btnStyle="contained">Sign Up</Button>
           </Link>
         </div>

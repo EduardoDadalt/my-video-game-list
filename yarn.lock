@@ -1367,13 +1367,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"add@npm:^2.0.6":
-  version: 2.0.6
-  resolution: "add@npm:2.0.6"
-  checksum: 6b21d5f2e58cf5e15d56cc6f9ebce04f04f4c33ae25f09d600ddacf8df00036ba521f17feb1b3f81307b7c6d2ef0bed8b511a0f86f062eb90c2f909b48b588ae
-  languageName: node
-  linkType: hard
-
 "agent-base@npm:^7.0.2, agent-base@npm:^7.1.0":
   version: 7.1.0
   resolution: "agent-base@npm:7.1.0"
@@ -3692,7 +3685,6 @@ __metadata:
     "@types/node": "npm:^20.11.0"
     "@types/react": "npm:^18.2.47"
     "@types/react-dom": "npm:^18.2.18"
-    add: "npm:^2.0.6"
     autoprefixer: "npm:^10.4.16"
     clsx: "npm:^2.1.0"
     eslint: "npm:^8.56.0"

@@ -1,3 +1,4 @@
+import database from "@/lib/database";
 import { PrismaClient } from "@prisma/client";
 import { NextRequest, NextResponse } from "next/server";
 
@@ -5,7 +6,6 @@ export async function GET(
   req: NextRequest,
   { params: { imageId } }: { params: { imageId: string } }
 ) {
-  const database = new PrismaClient();
   const { data } = await database.gameImage.findUniqueOrThrow({
     where: { id: imageId },
     select: { data: true },

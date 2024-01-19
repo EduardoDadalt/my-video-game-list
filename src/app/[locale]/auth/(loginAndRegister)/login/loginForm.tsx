@@ -1,10 +1,11 @@
 "use client";
-import Link from "next/link";
-import Field from "../field";
-import Button from "../button";
-import { useState } from "react";
+import { Dictionary } from "@/dictionaries/Dictionary";
 import { signIn } from "next-auth/react";
+import Link from "next/link";
 import { useSearchParams } from "next/navigation";
+import { useState } from "react";
+import Button from "../../../../../components/button";
+import Field from "../../../../../components/field";
 
 export default function LoginForm({
   dictionary,
@@ -40,8 +41,8 @@ export default function LoginForm({
         <Link href="/forget-password" className="link">
           {dictionary.auth.login.forgotPassword}
         </Link>
-        <Link href="/register" className="link">
-          {dictionary.auth.login.register}
+        <Link href="/auth/register" className="link">
+          {dictionary.auth.login.iDontHaveAccount}
         </Link>
       </div>
       <Button

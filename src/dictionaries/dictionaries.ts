@@ -1,4 +1,5 @@
 import "server-only";
+import { Dictionary } from "./Dictionary.ts";
 
 export const dictionaries: {
   en: () => Promise<Dictionary>;

@@ -1,14 +1,14 @@
-"use client";
 import Image from "next/image";
 import Link from "next/link";
 
 import menuImg from "../../../public/icons/menu.svg";
 import userImg from "../../../public/icons/user.svg";
 import Button from "../button";
+import { getServerSession } from "next-auth/next";
 
-export default function Header() {
-  // const session = getServerSession();
-  const session = null;
+export default async function Header() {
+  const session = await getServerSession();
+  // const session = null;
 
   return (
     <header className="p-2 flex items-center justify-between">

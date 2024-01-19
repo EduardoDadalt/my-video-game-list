@@ -1,18 +1,25 @@
-type Dictionary = {
+export type Dictionary = {
   appName: string;
   home: {
     gameOfMonth: string;
   };
   auth: {
+    register: {
+      email: string;
+      title: string;
+      submit: string;
+    };
     login: {
       title: string;
       username: string;
       password: string;
+      confirmPassword: string;
       submit: string;
       forgotPassword: string;
-      register: string;
+      iDontHaveAccount: string;
     };
     errors: {
+      email: string;
       usernameMinLength: string;
       usernameMaxLength: string;
       usernameRequired: string;
@@ -21,6 +28,9 @@ type Dictionary = {
       passwordMaxLength: string;
       userNotFound: string;
       userOrPasswordNotMatch: string;
+    };
+    oAuthProviders: {
+      continueWith: string;
     };
   };
   gamePage: {

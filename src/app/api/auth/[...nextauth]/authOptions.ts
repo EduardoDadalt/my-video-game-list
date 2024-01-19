@@ -49,7 +49,12 @@ export const authOptions: AuthOptions = {
         if (!(await verifyPassword(user.hashedPassword, password)))
           throw new Error(errors.userOrPasswordNotMatch);
 
-        return user;
+        return {
+          id: user.id,
+          name: user.name,
+          email: user.email,
+          image: user.image,
+        };
       },
     }),
   ],

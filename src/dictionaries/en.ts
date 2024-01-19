@@ -1,3 +1,5 @@
+import { Dictionary } from "./Dictionary";
+
 const en: Dictionary = {
   appName: "MyVideoGameList",
   home: {
@@ -8,11 +10,18 @@ const en: Dictionary = {
       title: "Login",
       username: "Username",
       password: "Password",
+      confirmPassword: "Confirm password",
       submit: "Submit",
       forgotPassword: "Forgot password?",
-      register: "Register",
+      iDontHaveAccount: "I don't have an account",
+    },
+    register: {
+      title: "Register",
+      submit: "Submit",
+      email: "Email",
     },
     errors: {
+      email: "Invalid email",
       usernameMinLength: "Username must have at least 3 characters",
       usernameMaxLength: "Username must have at most 30 characters",
       passwordMinLength: "Password must have at least 3 characters",
@@ -21,6 +30,9 @@ const en: Dictionary = {
       usernameRequired: "Username is required",
       userNotFound: "User not found",
       userOrPasswordNotMatch: "Username or password incorrect",
+    },
+    oAuthProviders: {
+      continueWith: "Continue with",
     },
   },
 

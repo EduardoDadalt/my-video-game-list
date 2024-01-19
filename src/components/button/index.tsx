@@ -1,7 +1,7 @@
 import clsx from "clsx";
 import { ButtonHTMLAttributes } from "react";
 
-export type ButtonStyles = "text" | "outlined" | "contained";
+export type ButtonStyles = "text" | "outlined" | "contained" | "none";
 
 export type ButtonProps = {
   btnStyle?: ButtonStyles;
@@ -18,6 +18,8 @@ export default function Button({
     switch (btnStyle) {
       case "contained":
         return "bg-primary-500 text-white hover:bg-primary-400 hover:border-primary-400";
+      case "none":
+        return "";
       case "text":
       default:
         return "bg-transparent text-gray-800 border hover:text-primary-500 hover:bg-primary-50";

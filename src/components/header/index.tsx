@@ -5,6 +5,7 @@ import menuImg from "../../../public/icons/menu.svg";
 import userImg from "../../../public/icons/user.svg";
 import Button from "../button";
 import { getServerSession } from "next-auth/next";
+import { LogoutButton } from "./LogoutButton";
 
 export default async function Header() {
   const session = await getServerSession();
@@ -18,13 +19,16 @@ export default async function Header() {
       </Link>
 
       {!!session ? (
-        <Image
-          src={userImg}
-          height={20}
-          width={20}
-          alt="Usuário"
-          className="rounded-full border h-8 w-8"
-        />
+        <>
+          <Image
+            src={userImg}
+            height={20}
+            width={20}
+            alt="Usuário"
+            className="rounded-full border h-8 w-8"
+          />
+          <LogoutButton />
+        </>
       ) : (
         <div className="flex gap-2">
           <Link href={"/auth/login"}>

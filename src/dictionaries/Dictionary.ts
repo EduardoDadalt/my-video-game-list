@@ -3,6 +3,7 @@ export type Dictionary = {
   home: {
     gameOfMonth: string;
   };
+  demo: string;
   auth: {
     register: {
       email: string;

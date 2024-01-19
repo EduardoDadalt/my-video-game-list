@@ -4,6 +4,7 @@ const pt: Dictionary = {
   home: {
     gameOfMonth: "Jogos do mês",
   },
+  demo: "Este site não está pronto ainda, não recomendo você se cadastrar ainda",
   auth: {
     login: {
       title: "Faça login",

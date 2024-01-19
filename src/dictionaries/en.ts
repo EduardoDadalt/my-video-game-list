@@ -5,6 +5,7 @@ const en: Dictionary = {
   home: {
     gameOfMonth: "Games of the month",
   },
+  demo: "This website is not ready yet, I don't recommend you to register yet",
   auth: {
     login: {
       title: "Login",

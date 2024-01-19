@@ -5,6 +5,7 @@ import { PrismaAdapter } from "@auth/prisma-adapter";
 import { AuthOptions } from "next-auth";
 import { Adapter } from "next-auth/adapters";
 import CredentialsProvider from "next-auth/providers/credentials";
+import DiscordProvider from "next-auth/providers/discord";
 import { z } from "zod";
 
 export const authOptions: AuthOptions = {
@@ -15,6 +16,16 @@ export const authOptions: AuthOptions = {
     error: "/auth/error",
   },
   providers: [
+    DiscordProvider({
+      clientId: validateIfStringIfNotThrowError(
+        process.env.DISCORD_CLIENT_ID,
+        "Discord client id is not set"
+      ),
+      clientSecret: validateIfStringIfNotThrowError(
+        process.env.DISCORD_CLIENT_SECRET,
+        "Discord client secret is not set"
+      ),
+    }),
     CredentialsProvider({
       credentials: {
         username: { label: "Username", type: "text" },
@@ -59,3 +70,10 @@ export const authOptions: AuthOptions = {
     }),
   ],
 };
+
+function validateIfStringIfNotThrowError(value: unknown, errorMessage: string) {
+  if (typeof value !== "string") {
+    throw new Error(errorMessage);
+  }
+  return value;
+}

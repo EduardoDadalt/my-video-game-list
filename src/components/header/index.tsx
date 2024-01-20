@@ -9,7 +9,6 @@ import { LogoutButton } from "./LogoutButton";
 
 export default async function Header() {
   const session = await getServerSession();
-  // const session = null;
 
   return (
     <header className="p-2 flex items-center justify-between">
@@ -19,16 +18,16 @@ export default async function Header() {
       </Link>
 
       {!!session ? (
-        <>
+        <div className="flex gap-2">
           <Image
-            src={userImg}
+            src={session?.user?.image ?? userImg}
             height={20}
             width={20}
             alt="Usuário"
             className="rounded-full border h-8 w-8"
           />
           <LogoutButton />
-        </>
+        </div>
       ) : (
         <div className="flex gap-2">
           <Link href={"/auth/login"}>

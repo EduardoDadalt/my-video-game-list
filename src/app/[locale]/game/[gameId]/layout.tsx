@@ -1,4 +1,3 @@
-import Button from "@/components/button";
 import { getDictionary } from "@/dictionaries/dictionaries";
 import database from "@/lib/database";
 import { Metadata } from "next";
@@ -7,6 +6,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ReactNode } from "react";
 import GameInformation from "./gameInformation";
+import { Button } from "@nextui-org/react";
 
 export default async function LayoutGamePages({
   params: { gameId, locale },
@@ -55,9 +55,7 @@ export default async function LayoutGamePages({
               <span className="font-bold">{dictionary.gamePage.score}:</span>
               <span className="text-lg">{score ?? 0}</span>
             </div>
-            <Button btnStyle="contained">
-              {dictionary.gamePage.addToList}
-            </Button>
+            <Button color="primary">{dictionary.gamePage.addToList}</Button>
           </div>
           <GameInformation
             dictionary={dictionary}

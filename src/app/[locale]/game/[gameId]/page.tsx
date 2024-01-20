@@ -1,6 +1,6 @@
-import Button from "@/components/button";
 import { getDictionary } from "@/dictionaries/dictionaries";
 import database from "@/lib/database";
+import { Button } from "@nextui-org/react";
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
@@ -58,7 +58,7 @@ export default async function GamePage({
           ))}
         </div>
         <Link href={`/game/${gameId}/characters`} className="float-right mt-2">
-          <Button btnStyle="contained">Ver Mais</Button>
+          <Button>Ver Mais</Button>
         </Link>
       </section>
     </div>

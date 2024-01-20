@@ -1,7 +1,7 @@
 "use client";
 
-import Button from "@/components/button";
 import { Dictionary } from "@/dictionaries/Dictionary";
+import { Button } from "@nextui-org/react";
 import Link from "next/link";
 import { ReactNode, useEffect, useState } from "react";
 import { FiChevronDown, FiChevronUp } from "react-icons/fi";

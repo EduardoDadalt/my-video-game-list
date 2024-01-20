@@ -1,11 +1,10 @@
 "use client";
 import { Dictionary } from "@/dictionaries/Dictionary";
+import { Button, Input } from "@nextui-org/react";
 import { signIn } from "next-auth/react";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import { useState } from "react";
-import Button from "../../../../../components/button";
-import Field from "../../../../../components/field";
 
 export default function LoginForm({
   dictionary,
@@ -18,6 +17,7 @@ export default function LoginForm({
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const error = searchParams.get("error");
+
   return (
     <>
       {!!error && (
@@ -25,13 +25,13 @@ export default function LoginForm({
           {error}
         </div>
       )}
-      <Field
+      <Input
         label={dictionary.auth.login.username}
         type="text"
         name="username"
         onChange={(e) => setUsername(e.target.value)}
       />
-      <Field
+      <Input
         label={dictionary.auth.login.password}
         type="password"
         name="password"
@@ -46,7 +46,7 @@ export default function LoginForm({
         </Link>
       </div>
       <Button
-        btnStyle="contained"
+        color="primary"
         onClick={() => signIn("credentials", { username, password, locale })}
       >
         {dictionary.auth.login.submit}

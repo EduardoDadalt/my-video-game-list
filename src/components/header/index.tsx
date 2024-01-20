@@ -1,14 +1,30 @@
+"use client";
 import Image from "next/image";
 import Link from "next/link";
 
+import {
+  Button,
+  Dropdown,
+  DropdownItem,
+  DropdownMenu,
+  DropdownSection,
+  DropdownTrigger,
+} from "@nextui-org/react";
+import { signIn, signOut, useSession } from "next-auth/react";
+import { FiChevronDown } from "react-icons/fi";
 import menuImg from "../../../public/icons/menu.svg";
 import userImg from "../../../public/icons/user.svg";
-import Button from "../button";
-import { getServerSession } from "next-auth/next";
-import { LogoutButton } from "./LogoutButton";
+import { useEffect, useState } from "react";
 
-export default async function Header() {
-  const session = await getServerSession();
+export default function Header() {
+  const { data: session } = useSession();
+  const [callbackUrl, setCallbackUrl] = useState("");
+
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+
+    setCallbackUrl(window.location.href);
+  }, []);
 
   return (
     <header className="p-2 flex items-center justify-between">
@@ -18,7 +34,35 @@ export default async function Header() {
       </Link>
 
       {!!session ? (
+        <DropdownUser />
+      ) : (
         <div className="flex gap-2">
+          <Button onClick={() => signIn()} color="primary">
+            Login
+          </Button>
+          <Link
+            href={{
+              pathname: "/auth/register",
+              query: { callbackUrl: callbackUrl },
+            }}
+          >
+            <Button variant="bordered" color="primary">
+              Sign Up
+            </Button>
+          </Link>
+        </div>
+      )}
+    </header>
+  );
+}
+
+function DropdownUser() {
+  const { data: session } = useSession();
+
+  return (
+    <Dropdown>
+      <DropdownTrigger>
+        <Button color="primary" variant="bordered" className="flex gap-2">
           <Image
             src={session?.user?.image ?? userImg}
             height={20}
@@ -26,18 +70,18 @@ export default async function Header() {
             alt="Usuário"
             className="rounded-full border h-8 w-8"
           />
-          <LogoutButton />
-        </div>
-      ) : (
-        <div className="flex gap-2">
-          <Link href={"/auth/login"}>
-            <Button>Login</Button>
-          </Link>
-          <Link href={"/auth/register"}>
-            <Button btnStyle="contained">Sign Up</Button>
-          </Link>
-        </div>
-      )}
-    </header>
+          <span>{session?.user?.name ?? "Usuário"}</span>
+          <FiChevronDown />
+        </Button>
+      </DropdownTrigger>
+      <DropdownMenu aria-label="Static Actions">
+        <DropdownSection>
+          <DropdownItem>Profile</DropdownItem>
+        </DropdownSection>
+        <DropdownItem color="danger" onClick={() => signOut()}>
+          Logout
+        </DropdownItem>
+      </DropdownMenu>
+    </Dropdown>
   );
 }

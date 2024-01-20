@@ -1,13 +1,12 @@
 "use client";
+import { Button } from "@nextui-org/react";
+import clsx from "clsx";
 import { BuiltInProviderType } from "next-auth/providers/index";
 import { LiteralUnion, signIn } from "next-auth/react";
-import Button from "../../../../../components/button";
 import { ReactNode } from "react";
-import clsx from "clsx";
-import { getDictionary } from "@/dictionaries/dictionaries";
 
 const COLORS = {
-  google: "bg-white hover:bg-gray-200 text-gray-900",
+  google: "bg-gray-50 hover:bg-gray-200 text-gray-900",
   facebook: "bg-blue-500 hover:bg-blue-700 text-white",
   discord: "bg-[#424549] hover:bg-[#36393e] text-white",
 };
@@ -33,7 +32,6 @@ export default function SignInProvider({
         "!p-4 flex items-center gap-2 justify-center",
         COLORS[color]
       )}
-      btnStyle="none"
       onClick={() => signIn(provider)}
     >
       {icon} {continueWith} {name}

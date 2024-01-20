@@ -4,6 +4,7 @@ import { Metadata } from "next";
 import { Open_Sans, Poppins } from "next/font/google";
 import "./globals.css";
 import { locales } from "@/constants/locales";
+import Providers from "./providers";
 
 const poppins = Poppins({
   weight: ["400", "600", "700"],
@@ -35,10 +36,12 @@ export default function RootLayout({
   params: { locale: string };
 }) {
   return (
-    <html lang={locale} className={clsx(poppins.variable, openSans.variable)}>
+    <html lang={locale} className={clsx(poppins.variable, openSans.variable,"light")}>
       <body>
-        <Header />
-        {children}
+        <Providers>
+          <Header />
+          {children}
+        </Providers>
       </body>
     </html>
   );

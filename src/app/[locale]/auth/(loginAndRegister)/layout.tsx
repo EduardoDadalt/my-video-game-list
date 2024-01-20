@@ -1,6 +1,7 @@
 import { ReactNode } from "react";
 import { OAuthProviders } from "./_components/OAuthProviders";
 import { getDictionary } from "@/dictionaries/dictionaries";
+import OnAuthRedirect from "./_components/OnAuthRedirect";
 
 export default async function LayoutLoginAndRegister({
   params: { locale },
@@ -19,6 +20,7 @@ export default async function LayoutLoginAndRegister({
         {children}
         <hr className="my-2" />
         <OAuthProviders locale={locale} />
+        <OnAuthRedirect />
       </div>
     </main>
   );

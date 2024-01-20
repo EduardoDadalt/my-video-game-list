@@ -3,11 +3,12 @@
 @tailwind utilities;
 
 html,
-body {
+body,
+body > div {
   @apply h-full w-full m-0 p-0 font-body;
 }
 
-body {
+body > div {
   @apply flex flex-col;
 }
 main {

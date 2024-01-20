@@ -15,6 +15,8 @@ export const authOptions: AuthOptions = {
     newUser: "/auth/welcome",
     error: "/auth/error",
   },
+  session: { strategy: "jwt" },
+  secret: process.env.NEXTAUTH_SECRET,
   providers: [
     DiscordProvider({
       clientId: validateIfStringIfNotThrowError(

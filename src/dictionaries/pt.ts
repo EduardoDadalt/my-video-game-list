@@ -16,8 +16,8 @@ const pt: Dictionary = {
       iDontHaveAccount: "Não tenho uma conta",
     },
     register: {
-      title: "Registrar-se",
-      submit: "Registrar",
+      title: "Cadastra-se",
+      submit: "Cadastrar",
       email: "Email",
     },
     errors: {
@@ -30,6 +30,9 @@ const pt: Dictionary = {
       passwordMinLength: "A senha deve ter pelo menos 3 caracteres",
       passwordMaxLength: "A senha deve ter no máximo 100 caracteres",
       userOrPasswordNotMatch: "Usuário ou senha incorretos",
+      usernameAlreadyExists: "Nome de usuário já existe",
+      emailAlreadyExists: "Email já existe",
+      usernameAndEmailAlreadyExists: "Nome de usuário e email já existem",
     },
     oAuthProviders: {
       continueWith: "Continuar com",

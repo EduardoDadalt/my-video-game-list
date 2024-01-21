@@ -29,6 +29,9 @@ export type Dictionary = {
       passwordMaxLength: string;
       userNotFound: string;
       userOrPasswordNotMatch: string;
+      usernameAlreadyExists: string;
+      emailAlreadyExists: string;
+      usernameAndEmailAlreadyExists: string;
     };
     oAuthProviders: {
       continueWith: string;

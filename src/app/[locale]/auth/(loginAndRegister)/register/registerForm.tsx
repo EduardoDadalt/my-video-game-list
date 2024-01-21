@@ -3,22 +3,31 @@
 import { Dictionary } from "@/dictionaries/Dictionary";
 import { Button, Input } from "@nextui-org/react";
 import { Form, Formik } from "formik";
-import { useFormState, useFormStatus } from "react-dom";
+import { signIn } from "next-auth/react";
 import { z } from "zod";
 import { toFormikValidationSchema } from "zod-formik-adapter";
-import { registerUser as registerUserAction } from "./actions";
 import { getRegisterUserSchema } from "./getRegisterUserSchema";
-import Alert from "@/components/alert";
-import { signIn } from "next-auth/react";
 
 export default function RegisterForm({
   dictionary,
 }: {
   dictionary: Dictionary;
 }) {
-  const [state, formAction] = useFormState(registerUserAction, { message: "" });
   const schema = getRegisterUserSchema(dictionary);
   type RegisterUser = z.infer<typeof schema>;
+
+  async function onSubmit(registerUser: RegisterUser) {
+    const response = await fetch("/api/auth/register", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(registerUser),
+    });
+    if (response.status === 201) {
+      const { username, password } = registerUser;
+      await signIn("credentials", { username, password });
+    }
+  }
+
   return (
     <Formik<RegisterUser>
       initialValues={{
@@ -27,20 +36,11 @@ export default function RegisterForm({
         password: "",
         confirmPassword: "",
       }}
-      onSubmit={async (values) => {
-        const formData = new FormData();
-        formData.append("username", values.username);
-        formData.append("email", values.email);
-        formData.append("password", values.password);
-        formData.append("confirmPassword", values.confirmPassword);
-        formAction(formData);
-        const { username, password } = values;
-        await signIn("credentials", { username, password });
-      }}
+      onSubmit={onSubmit}
       validationSchema={toFormikValidationSchema(schema)}
     >
       {({ handleChange, handleBlur, values, errors, isSubmitting }) => (
-        <Form className="flex flex-col gap-2" action={formAction}>
+        <Form className="flex flex-col gap-2">
           <Input
             label={dictionary.auth.login.username}
             name="username"
@@ -85,9 +85,8 @@ export default function RegisterForm({
             errorMessage={errors.confirmPassword}
           />
           <Button color="primary" type="submit" isDisabled={isSubmitting}>
-            {dictionary.auth.login.submit}
+            {dictionary.auth.register.submit}
           </Button>
-          {!!state && <Alert type="error">{state.message}</Alert>}
         </Form>
       )}
     </Formik>

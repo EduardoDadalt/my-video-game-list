@@ -31,6 +31,9 @@ const en: Dictionary = {
       usernameRequired: "Username is required",
       userNotFound: "User not found",
       userOrPasswordNotMatch: "Username or password incorrect",
+      usernameAlreadyExists: "Username already exists",
+      emailAlreadyExists: "Email already exists",
+      usernameAndEmailAlreadyExists: "Username and email already exists",
     },
     oAuthProviders: {
       continueWith: "Continue with",

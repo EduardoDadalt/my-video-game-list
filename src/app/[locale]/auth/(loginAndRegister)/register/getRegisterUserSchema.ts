@@ -1,4 +1,4 @@
-import { Dictionary } from "@/dictionaries/Dictionary";
+import type { Dictionary } from "@/dictionaries/Dictionary";
 import { z } from "zod";
 
 export function getRegisterUserSchema(dictionary: Dictionary) {

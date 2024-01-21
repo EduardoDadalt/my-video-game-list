@@ -1,14 +1,12 @@
 import GameCard from "@/components/gameCard";
-import { getDictionary } from "@/dictionaries/dictionaries";
-import database from "@/lib/database";
+import { db } from "@/server/db";
 
 export default async function GamesPage({
-  params: { locale },
+  params: {},
 }: {
   params: { locale: string };
 }) {
-  const dictionary = await getDictionary(locale);
-  const games = await database.game.findMany({
+  const games = await db.game.findMany({
     where: { deleted: false },
     orderBy: { name: "asc" },
   });

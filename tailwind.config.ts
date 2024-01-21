@@ -1,12 +1,10 @@
 import { nextui } from "@nextui-org/react";
-import type { Config } from "tailwindcss";
+import { type Config } from "tailwindcss";
 import colors from "tailwindcss/colors";
 
-const config: Config = {
+export default {
   content: [
-    "./src/pages/**/*.{js,ts,jsx,tsx,mdx}",
-    "./src/components/**/*.{js,ts,jsx,tsx,mdx}",
-    "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
+    "./src/**/*.tsx",
     "./node_modules/@nextui-org/theme/dist/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
@@ -30,5 +28,4 @@ const config: Config = {
       },
     }),
   ],
-};
-export default config;
+} satisfies Config;

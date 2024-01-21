@@ -1,6 +1,6 @@
 import { match } from "@formatjs/intl-localematcher";
 import Negotiator from "negotiator";
-import { NextRequest } from "next/server";
+import type { NextRequest } from "next/server";
 import { locales } from "./constants/locales";
 
 export const defaultLocale = "en";

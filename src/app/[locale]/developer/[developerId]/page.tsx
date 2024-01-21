@@ -3,5 +3,10 @@ export default async function DeveloperPage({
 }: {
   params: { developerId: string; locale: string };
 }) {
-  return <div></div>;
+  return (
+    <div>
+      {developerId}
+      {locale}
+    </div>
+  );
 }

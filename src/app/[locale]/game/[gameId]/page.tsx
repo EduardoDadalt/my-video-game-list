@@ -1,22 +1,19 @@
-import { getDictionary } from "@/dictionaries/dictionaries";
-import database from "@/lib/database";
+import { db } from "@/server/db";
 import { Button } from "@nextui-org/react";
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 
 export default async function GamePage({
-  params: { gameId, locale },
+  params: { gameId },
 }: {
   params: { gameId: string; locale: string };
 }) {
-  const dictionary = await getDictionary(locale);
-
-  const game = await database.game.findUnique({
+  const game = await db.game.findUnique({
     where: { id: gameId, deleted: false },
     include: { Categories: true, Publisher: true, Developers: true },
   });
-  const characters = await database.character.findMany({
+  const characters = await db.character.findMany({
     where: {
       AND: [
         { Games: { some: { id: gameId } } },
@@ -31,18 +28,18 @@ export default async function GamePage({
   });
   if (!game) return notFound();
   return (
-    <div className="p-4 space-y-4">
+    <div className="space-y-4 p-4">
       <section>
         <h2 className="font-display font-bold">Sinopse</h2>
         <div className="whitespace-pre-wrap">{game.sinopse}</div>
       </section>
       <section>
         <h2 className="font-display font-bold">Characters:</h2>
-        <div className="flex-wrap flex flex-col gap-2">
+        <div className="flex flex-col flex-wrap gap-2">
           {characters.map((character) => (
             <div
               key={character.id}
-              className="h-24 border shadow overflow-hidden rounded-xl flex gap-2"
+              className="flex h-24 gap-2 overflow-hidden rounded-xl border shadow"
             >
               <Image
                 src={`/api/character/${character.id}/image`}
@@ -66,7 +63,7 @@ export default async function GamePage({
 }
 
 export async function generateStaticParams() {
-  const games = await database.game.findMany({ select: { id: true } });
+  const games = await db.game.findMany({ select: { id: true } });
 
   return games.map((game) => ({
     gameId: game.id,

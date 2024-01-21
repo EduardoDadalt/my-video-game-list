@@ -1,4 +1,4 @@
-import { Dictionary } from "./Dictionary";
+import { type Dictionary } from "./Dictionary";
 const pt: Dictionary = {
   appName: "MyVideoGameList",
   home: {

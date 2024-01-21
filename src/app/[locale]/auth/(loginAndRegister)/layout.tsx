@@ -1,4 +1,4 @@
-import { ReactNode } from "react";
+import { Suspense, type ReactNode } from "react";
 import { OAuthProviders } from "./_components/OAuthProviders";
 import { getDictionary } from "@/dictionaries/dictionaries";
 import OnAuthRedirect from "./_components/OnAuthRedirect";
@@ -13,14 +13,16 @@ export default async function LayoutLoginAndRegister({
   const dictionary = await getDictionary(locale);
   return (
     <main className="flex items-center justify-center">
-      <div className="flex flex-col gap-2 border p-2 rounded-xl shadow w-full mx-4 sm:mx-0 sm:min-w-72 sm:w-1/2 max-w-96">
-        <div className="bg-amber-200 text-black p-2 border border-yellow-500 rounded">
+      <div className="mx-4 flex w-full max-w-96 flex-col gap-2 rounded-xl border p-2 shadow sm:mx-0 sm:w-1/2 sm:min-w-72">
+        <div className="rounded border border-yellow-500 bg-amber-200 p-2 text-black">
           {dictionary.demo}
         </div>
         {children}
         <hr className="my-2" />
         <OAuthProviders locale={locale} />
-        <OnAuthRedirect />
+        <Suspense>
+          <OnAuthRedirect />
+        </Suspense>
       </div>
     </main>
   );

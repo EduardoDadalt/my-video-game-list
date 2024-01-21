@@ -1,9 +1,9 @@
 "use client";
 import { Button } from "@nextui-org/react";
 import clsx from "clsx";
-import { BuiltInProviderType } from "next-auth/providers/index";
-import { LiteralUnion, signIn } from "next-auth/react";
-import { ReactNode } from "react";
+import { type BuiltInProviderType } from "next-auth/providers/index";
+import { type LiteralUnion, signIn } from "next-auth/react";
+import { type ReactNode } from "react";
 
 const COLORS = {
   google: "bg-gray-50 hover:bg-gray-200 text-gray-900",
@@ -29,8 +29,8 @@ export default function SignInProvider({
   return (
     <Button
       className={clsx(
-        "!p-4 flex items-center gap-2 justify-center",
-        COLORS[color]
+        "flex items-center justify-center gap-2 !p-4",
+        COLORS[color],
       )}
       onClick={() => signIn(provider)}
     >

@@ -2,10 +2,10 @@ import GameOfMonth from "@/components/homepage/gameOfMonth";
 
 export default async function Home({
   params: {
-    locale: [locale],
+    locale,
   },
 }: {
-  params: { locale: string[] };
+  params: { locale: string };
 }) {
   return (
     <main>

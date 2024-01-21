@@ -1,9 +1,9 @@
 import Header from "@/components/header";
+import { locales } from "@/constants/locales";
 import clsx from "clsx";
-import { Metadata } from "next";
+import type { Metadata } from "next";
 import { Open_Sans, Poppins } from "next/font/google";
 import "./globals.css";
-import { locales } from "@/constants/locales";
 import Providers from "./providers";
 
 const poppins = Poppins({
@@ -36,7 +36,10 @@ export default function RootLayout({
   params: { locale: string };
 }) {
   return (
-    <html lang={locale} className={clsx(poppins.variable, openSans.variable,"light")}>
+    <html
+      lang={locale}
+      className={clsx(poppins.variable, openSans.variable, "light")}
+    >
       <body>
         <Providers>
           <Header />

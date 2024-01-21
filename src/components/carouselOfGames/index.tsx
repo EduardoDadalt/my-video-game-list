@@ -1,12 +1,12 @@
 "use client";
 
-import GameCard, { GameCardProps } from "@/components/gameCard";
+import GameCard, { type GameCardProps } from "@/components/gameCard";
 import { useCallback, useState } from "react";
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
 import { Pagination } from "swiper/modules";
-import { Swiper, SwiperClass, SwiperSlide } from "swiper/react";
+import { Swiper, type SwiperClass, SwiperSlide } from "swiper/react";
 import "./style.css";
 
 export default function CarouselOfGames({ games }: { games: GameCardProps[] }) {

@@ -1,12 +1,12 @@
-import database from "@/lib/database";
+import { db } from "@/server/db";
 import Image from "next/image";
 
 export default async function Characters({
-  params: { gameId, locale },
+  params: { gameId },
 }: {
   params: { gameId: string; locale: string };
 }) {
-  const characters = await database.character.findMany({
+  const characters = await db.character.findMany({
     where: {
       AND: [
         { Games: { some: { id: gameId } } },
@@ -19,8 +19,8 @@ export default async function Characters({
   });
   return (
     <main className="p-4">
-      <h1 className="font-display font-bold text-xl">Characters</h1>
-      <div className="flex gap-2 flex-col">
+      <h1 className="font-display text-xl font-bold">Characters</h1>
+      <div className="flex flex-col gap-2">
         {characters.map((character) => (
           <div key={character.id} className="flex">
             <Image

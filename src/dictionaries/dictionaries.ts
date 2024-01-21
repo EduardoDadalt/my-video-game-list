@@ -1,5 +1,5 @@
 import "server-only";
-import { Dictionary } from "./Dictionary.ts";
+import { type Dictionary } from "./Dictionary.ts";
 
 export const dictionaries: {
   en: () => Promise<Dictionary>;
@@ -10,4 +10,4 @@ export const dictionaries: {
 };
 
 export const getDictionary = async (locale: string): Promise<Dictionary> =>
-  dictionaries[locale]?.() ?? dictionaries["en"]();
+  dictionaries[locale]?.() ?? dictionaries.en();

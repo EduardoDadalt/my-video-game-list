@@ -9,10 +9,10 @@ export default async function RegisterPage({
   const dictionary = await getDictionary(locale);
   return (
     <>
-      <h1 className="text-2xl font-bold font-display text-center">
+      <h1 className="text-center font-display text-2xl font-bold">
         {dictionary.auth.register.title}
       </h1>
-      <RegisterForm dictionary={dictionary} />
+      <RegisterForm dictionary={dictionary} locale={locale} />
     </>
   );
 }

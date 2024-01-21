@@ -1,32 +1,25 @@
 import { getDictionary } from "@/dictionaries/dictionaries";
-import database from "@/lib/database";
+import { env } from "@/env";
+import { db } from "@/server/db";
 import { verifyPassword } from "@/util/cripto";
-import { PrismaAdapter } from "@auth/prisma-adapter";
-import { AuthOptions } from "next-auth";
-import { Adapter } from "next-auth/adapters";
+import { PrismaAdapter } from "@next-auth/prisma-adapter";
+import { getServerSession, type NextAuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import DiscordProvider from "next-auth/providers/discord";
 import { z } from "zod";
 
-export const authOptions: AuthOptions = {
-  adapter: PrismaAdapter(database) as Adapter,
+export const authOptions: NextAuthOptions = {
+  session: { strategy: "jwt" },
   pages: {
     signIn: "/auth/login",
     newUser: "/auth/welcome",
     error: "/auth/error",
   },
-  session: { strategy: "jwt" },
-  secret: process.env.NEXTAUTH_SECRET,
+  adapter: PrismaAdapter(db),
   providers: [
     DiscordProvider({
-      clientId: validateIfStringIfNotThrowError(
-        process.env.DISCORD_CLIENT_ID,
-        "Discord client id is not set"
-      ),
-      clientSecret: validateIfStringIfNotThrowError(
-        process.env.DISCORD_CLIENT_SECRET,
-        "Discord client secret is not set"
-      ),
+      clientId: env.DISCORD_CLIENT_ID,
+      clientSecret: env.DISCORD_CLIENT_SECRET,
     }),
     CredentialsProvider({
       credentials: {
@@ -34,7 +27,7 @@ export const authOptions: AuthOptions = {
         password: { label: "Password", type: "password" },
         locale: { label: "Locale", type: "text", placeholder: "en" },
       },
-      async authorize(credentials, req) {
+      async authorize(credentials) {
         const locale = credentials?.locale;
         if (!locale) {
           throw "Locale is not pass to the authorize function";
@@ -54,13 +47,14 @@ export const authOptions: AuthOptions = {
         });
         const { username, password } = loginSchema.parse(credentials);
 
-        const user = await database.user.findFirst({
+        const user = await db.user.findFirst({
           where: { name: username },
         });
 
-        if (!user || !user.hashedPassword) throw new Error(errors.userNotFound);
-        if (!(await verifyPassword(user.hashedPassword, password)))
+        if (!user?.hashedPassword) throw new Error(errors.userNotFound);
+        if (!(await verifyPassword(user.hashedPassword, password))) {
           throw new Error(errors.userOrPasswordNotMatch);
+        }
 
         return {
           id: user.id,
@@ -73,9 +67,4 @@ export const authOptions: AuthOptions = {
   ],
 };
 
-function validateIfStringIfNotThrowError(value: unknown, errorMessage: string) {
-  if (typeof value !== "string") {
-    throw new Error(errorMessage);
-  }
-  return value;
-}
+export const getServerAuthSession = () => getServerSession(authOptions);

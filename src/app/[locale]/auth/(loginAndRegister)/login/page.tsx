@@ -1,6 +1,5 @@
 import LoginForm from "@/app/[locale]/auth/(loginAndRegister)/login/loginForm";
 import { getDictionary } from "../../../../../dictionaries/dictionaries";
-import { OAuthProviders } from "../_components/OAuthProviders";
 import { Suspense } from "react";
 
 export default async function LoginPage({
@@ -12,7 +11,7 @@ export default async function LoginPage({
 
   return (
     <>
-      <h1 className="text-2xl font-bold font-display text-center">
+      <h1 className="font-display text-center text-2xl font-bold">
         {dictionary.auth.login.title}
       </h1>
       <Suspense fallback={<div>Loading...</div>}>

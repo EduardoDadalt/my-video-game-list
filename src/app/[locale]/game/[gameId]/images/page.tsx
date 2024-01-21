@@ -1,15 +1,13 @@
-import { getDictionary } from "@/dictionaries/dictionaries";
-import database from "@/lib/database";
-import { Metadata } from "next";
+import { db } from "@/server/db";
+import { type Metadata } from "next";
 import Image from "next/image";
 
 export default async function GameImagesPage({
-  params: { gameId, locale },
+  params: { gameId },
 }: {
   params: { gameId: string; locale: string };
 }) {
-  const dictionary = await getDictionary(locale);
-  const gameImages = await database.gameImage.findMany({
+  const gameImages = await db.gameImage.findMany({
     where: { gameId: gameId },
   });
   return (

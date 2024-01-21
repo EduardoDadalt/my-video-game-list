@@ -1,4 +1,4 @@
-import { Dictionary } from "./Dictionary";
+import { type Dictionary } from "./Dictionary";
 
 const en: Dictionary = {
   appName: "MyVideoGameList",

@@ -1,9 +1,9 @@
 "use client";
 
-import { Dictionary } from "@/dictionaries/Dictionary";
+import { type Dictionary } from "@/dictionaries/Dictionary";
 import { Button } from "@nextui-org/react";
 import Link from "next/link";
-import { ReactNode, useEffect, useState } from "react";
+import { type ReactNode, useEffect, useState } from "react";
 import { FiChevronDown, FiChevronUp } from "react-icons/fi";
 function DataInfo({ title, data }: { title: string; data: ReactNode }) {
   return (

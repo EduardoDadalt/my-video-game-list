@@ -1,5 +1,4 @@
 "use client";
-import Image from "next/image";
 import Link from "next/link";
 
 import {
@@ -11,10 +10,9 @@ import {
   DropdownTrigger,
 } from "@nextui-org/react";
 import { signIn, signOut, useSession } from "next-auth/react";
-import { FiChevronDown } from "react-icons/fi";
-import menuImg from "../../../public/icons/menu.svg";
-import userImg from "../../../public/icons/user.svg";
+import { FiChevronDown, FiMenu, FiUser } from "react-icons/fi";
 import { useEffect, useState } from "react";
+import Image from "next/image";
 
 export default function Header() {
   const { data: session } = useSession();
@@ -27,8 +25,8 @@ export default function Header() {
   }, []);
 
   return (
-    <header className="p-2 flex items-center justify-between">
-      <Image src={menuImg} height={20} width={20} alt="Menu" />
+    <header className="flex items-center justify-between p-2">
+      <FiMenu size={24} />
       <Link href={"/"}>
         <h1 className="font-display">MyVideoGameList</h1>
       </Link>
@@ -63,13 +61,18 @@ function DropdownUser() {
     <Dropdown>
       <DropdownTrigger>
         <Button color="primary" variant="bordered" className="flex gap-2">
-          <Image
-            src={session?.user?.image ?? userImg}
-            height={20}
-            width={20}
-            alt="Usuário"
-            className="rounded-full border h-8 w-8"
-          />
+          {!!session?.user?.image ? (
+            <Image
+              src={session?.user?.image}
+              alt={`Picture of ${session.user.name}`}
+              height={24}
+              width={24}
+              className="rounded-full"
+            />
+          ) : (
+            <FiUser size={24} />
+          )}
+
           <span>{session?.user?.name ?? "Usuário"}</span>
           <FiChevronDown />
         </Button>

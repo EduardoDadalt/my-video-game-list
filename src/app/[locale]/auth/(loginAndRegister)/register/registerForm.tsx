@@ -1,30 +1,37 @@
 "use client";
 
-import { Dictionary } from "@/dictionaries/Dictionary";
+import type { Dictionary } from "@/dictionaries/Dictionary";
 import { Button, Input } from "@nextui-org/react";
 import { Form, Formik } from "formik";
 import { signIn } from "next-auth/react";
-import { z } from "zod";
+import { type z } from "zod";
 import { toFormikValidationSchema } from "zod-formik-adapter";
 import { getRegisterUserSchema } from "./getRegisterUserSchema";
+import { api } from "@/trpc/react";
 
 export default function RegisterForm({
   dictionary,
+  locale,
 }: {
   dictionary: Dictionary;
+  locale: string;
 }) {
   const schema = getRegisterUserSchema(dictionary);
   type RegisterUser = z.infer<typeof schema>;
+  const registerUserApi = api.user.register.useMutation();
 
   async function onSubmit(registerUser: RegisterUser) {
-    const response = await fetch("/api/auth/register", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(registerUser),
-    });
-    if (response.status === 201) {
-      const { username, password } = registerUser;
-      await signIn("credentials", { username, password });
+    try {
+      const message = await registerUserApi.mutateAsync({
+        ...registerUser,
+        locale: locale,
+      });
+      if (message?.success) {
+        const { username, password } = registerUser;
+        await signIn("credentials", { username, password, locale });
+      }
+    } catch (error) {
+      console.error(error);
     }
   }
 

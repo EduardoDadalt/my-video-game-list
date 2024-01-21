@@ -1,6 +1,6 @@
-import database from "@/lib/database";
+import { db } from "@/server/db";
 import CarouselOfGames from "../carouselOfGames";
-import { GameCardProps } from "../gameCard";
+import { type GameCardProps } from "../gameCard";
 import { getDictionary } from "@/dictionaries/dictionaries";
 
 export default async function GameOfMonth({ locale }: { locale: string }) {
@@ -8,7 +8,7 @@ export default async function GameOfMonth({ locale }: { locale: string }) {
 
   const games = await getGamesOfMonth();
   return (
-    <section className="mx-6 lg:mx-20 space-y-2 border rounded-xl p-4 pt-2">
+    <section className="mx-6 space-y-2 rounded-xl border p-4 pt-2 lg:mx-20">
       <h1 className="text-xl font-bold ">{dictionary.home.gameOfMonth}</h1>
       <CarouselOfGames games={[...games, ...games, ...games, ...games]} />
     </section>
@@ -21,16 +21,16 @@ export async function getGamesOfMonth(): Promise<GameCardProps[]> {
   const dataInicioMes = new Date(
     dateNow.getFullYear(),
     dateNow.getUTCMonth(),
-    1
+    1,
   );
 
   const dataFinalMes = new Date(
     dateNow.getFullYear(),
     dateNow.getUTCMonth() + 1,
-    0
+    0,
   );
 
-  const games: GameCardProps[] = await database.$queryRaw`SELECT
+  const games: GameCardProps[] = await db.$queryRaw`SELECT
   g.id,
   g.name,
   g.posterVerticalId

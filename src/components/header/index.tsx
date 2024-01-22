@@ -27,9 +27,14 @@ export default function Header() {
   return (
     <header className="flex items-center justify-between p-2">
       <FiMenu size={24} />
-      <Link href={"/"}>
-        <h1 className="font-display">MyVideoGameList</h1>
-      </Link>
+      <div className="flex flex-row items-center justify-center gap-2">
+        <Link href={"/"}>
+          <h1 className="font-display">MyVideoGameList </h1>
+        </Link>
+        <div className="rounded-lg bg-yellow-500 p-1 text-sm font-bold text-white">
+          Alpha
+        </div>
+      </div>
 
       {!!session ? (
         <DropdownUser />

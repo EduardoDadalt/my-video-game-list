@@ -181,6 +181,7 @@ model Rating {
 
   Review Review?
 
+  @@unique([gameId, userId])
   @@index([gameId])
   @@index([userId])
 }

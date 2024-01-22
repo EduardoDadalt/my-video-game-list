@@ -31,7 +31,7 @@ export default function Header() {
         <Link href={"/"}>
           <h1 className="font-display">MyVideoGameList </h1>
         </Link>
-        <div className="rounded-lg bg-yellow-500 p-1 text-sm font-bold text-white">
+        <div className="rounded-lg bg-gradient-to-br from-yellow-500 to-amber-500 p-1 text-sm font-bold text-white">
           Alpha
         </div>
       </div>
@@ -63,7 +63,7 @@ function DropdownUser() {
   const { data: session } = useSession();
 
   return (
-    <Dropdown>
+    <Dropdown showArrow>
       <DropdownTrigger>
         <Button color="primary" variant="bordered" className="flex gap-2">
           {!!session?.user?.image ? (
@@ -79,10 +79,9 @@ function DropdownUser() {
           )}
 
           <span>{session?.user?.name ?? "Usuário"}</span>
-          <FiChevronDown />
         </Button>
       </DropdownTrigger>
-      <DropdownMenu aria-label="Static Actions">
+      <DropdownMenu>
         <DropdownSection>
           <DropdownItem>Profile</DropdownItem>
         </DropdownSection>

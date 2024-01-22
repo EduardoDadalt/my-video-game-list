@@ -9,11 +9,12 @@ import {
   ModalContent,
   ModalFooter,
   ModalHeader,
+  Select,
+  SelectItem,
   useDisclosure,
 } from "@nextui-org/react";
-import { useState, type ReactNode } from "react";
-import { Select, SelectSection, SelectItem } from "@nextui-org/react";
 import { StatusRating } from "@prisma/client";
+import { useState, type ReactNode } from "react";
 
 export default function AddGameToList({
   gameId,

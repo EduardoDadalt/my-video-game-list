@@ -165,9 +165,10 @@ enum StatusRating {
 }
 
 model Rating {
-  id     String       @id @default(cuid())
-  rating Int
-  status StatusRating
+  id          String       @id @default(cuid())
+  rating      Int
+  status      StatusRating
+  hoursPlayed Int?
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt

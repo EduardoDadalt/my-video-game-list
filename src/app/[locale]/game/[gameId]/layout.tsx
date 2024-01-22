@@ -1,10 +1,10 @@
 import { getDictionary } from "@/dictionaries/dictionaries";
 import { db } from "@/server/db";
-import { Button } from "@nextui-org/react";
 import type { Metadata } from "next";
 import Image from "next/image";
 import { notFound } from "next/navigation";
 import type { ReactNode } from "react";
+import AddGameToList from "./addGameToList";
 import GameInformation from "./gameInformation";
 
 export default async function LayoutGamePages({
@@ -18,6 +18,7 @@ export default async function LayoutGamePages({
   children: ReactNode;
 }) {
   const dictionary = await getDictionary(locale);
+
   const game = await db.game.findUnique({
     where: { id: gameId },
     include: { Categories: true, Publisher: true, Developers: true },
@@ -54,7 +55,9 @@ export default async function LayoutGamePages({
               <span className="font-bold">{dictionary.gamePage.score}:</span>
               <span className="text-lg">{score ?? 0}</span>
             </div>
-            <Button color="primary">{dictionary.gamePage.addToList}</Button>
+            <AddGameToList gameId={gameId}>
+              {dictionary.gamePage.addToList}
+            </AddGameToList>
           </div>
           <GameInformation
             dictionary={dictionary}

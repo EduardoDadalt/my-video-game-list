@@ -6,6 +6,8 @@ import { notFound } from "next/navigation";
 import type { ReactNode } from "react";
 import AddGameToList from "./addGameToList";
 import GameInformation from "./gameInformation";
+import { Tab, Tabs } from "@nextui-org/react";
+import { TabOfPages } from "./tabsOfPages";
 
 export default async function LayoutGamePages({
   params: { gameId, locale },
@@ -65,7 +67,10 @@ export default async function LayoutGamePages({
             locale={locale}
           />
         </div>
-        {children}
+        <div className="flex flex-col sm:flex-1">
+          <TabOfPages gameId={gameId} />
+          {children}
+        </div>
       </div>
     </main>
   );

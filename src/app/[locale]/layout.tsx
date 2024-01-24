@@ -1,10 +1,10 @@
-import Header from "@/components/header";
 import { locales } from "@/constants/locales";
 import clsx from "clsx";
 import type { Metadata } from "next";
 import { Open_Sans, Poppins } from "next/font/google";
 import "./globals.css";
 import Providers from "./providers";
+import Header from "./_components/header";
 
 const poppins = Poppins({
   weight: ["400", "600", "700"],

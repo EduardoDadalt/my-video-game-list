@@ -4,10 +4,11 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import { notFound } from "next/navigation";
 import type { ReactNode } from "react";
-import AddGameToList from "./addGameToList";
-import GameInformation from "./gameInformation";
-import { Tab, Tabs } from "@nextui-org/react";
-import { TabOfPages } from "./tabsOfPages";
+import AddGameToList from "./_components/addGameToList";
+import GameInformation from "./_components/gameInformation";
+import { TabOfPages } from "./_components/tabsOfPages";
+
+export const revalidate = 43200;
 
 export default async function LayoutGamePages({
   params: { gameId, locale },

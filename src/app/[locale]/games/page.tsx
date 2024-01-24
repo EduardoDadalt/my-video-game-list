@@ -1,5 +1,5 @@
-import GameCard from "@/components/gameCard";
 import { db } from "@/server/db";
+import GameCard from "../_components/gameCard";
 
 export default async function GamesPage({
   params: {},

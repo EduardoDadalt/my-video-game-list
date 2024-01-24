@@ -1,12 +1,12 @@
 "use client";
 
-import GameCard, { type GameCardProps } from "@/components/gameCard";
 import { useCallback, useState } from "react";
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
 import { Pagination } from "swiper/modules";
-import { Swiper, type SwiperClass, SwiperSlide } from "swiper/react";
+import { Swiper, SwiperSlide, type SwiperClass } from "swiper/react";
+import GameCard, { type GameCardProps } from "../gameCard";
 import "./style.css";
 
 export default function CarouselOfGames({ games }: { games: GameCardProps[] }) {
@@ -35,7 +35,7 @@ export default function CarouselOfGames({ games }: { games: GameCardProps[] }) {
         {games.map((game) => (
           <SwiperSlide
             key={game.id}
-            className="first:rounded-l-none last:rounded-r-none rounded-lg overflow-hidden"
+            className="overflow-hidden rounded-lg first:rounded-l-none last:rounded-r-none"
           >
             <GameCard game={game} />
           </SwiperSlide>

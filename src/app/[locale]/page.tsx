@@ -1,9 +1,7 @@
-import GameOfMonth from "@/components/homepage/gameOfMonth";
+import GameOfMonth from "./_components/homepage/gameOfMonth";
 
 export default async function Home({
-  params: {
-    locale,
-  },
+  params: { locale },
 }: {
   params: { locale: string };
 }) {

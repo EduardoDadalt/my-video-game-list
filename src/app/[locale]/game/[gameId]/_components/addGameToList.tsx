@@ -16,25 +16,30 @@ import {
 import { StatusRating } from "@prisma/client";
 import { useState, type ReactNode } from "react";
 
+type RatingInfo = {
+  rating: number;
+  status: StatusRating;
+  hoursPlayed: number;
+};
+
 export default function AddGameToList({
   gameId,
+  initialRating,
   children,
 }: {
   gameId: string;
+  initialRating?: RatingInfo;
   children: ReactNode;
 }) {
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
-  type RatingInfo = {
-    rating: number;
-    status: StatusRating;
-    hoursPlayed: number;
-  };
 
-  const [ratingInfo, setRatingInfo] = useState<RatingInfo>({
-    rating: 0,
-    status: StatusRating.Playing,
-    hoursPlayed: 0,
-  });
+  const [ratingInfo, setRatingInfo] = useState<RatingInfo>(
+    initialRating ?? {
+      rating: 0,
+      status: StatusRating.Playing,
+      hoursPlayed: 0,
+    },
+  );
 
   const addGameToList = api.game.addToList.useMutation();
 

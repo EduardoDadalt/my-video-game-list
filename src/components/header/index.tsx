@@ -1,18 +1,19 @@
 "use client";
 import Link from "next/link";
 
-import {
-  Button,
-  Dropdown,
-  DropdownItem,
-  DropdownMenu,
-  DropdownSection,
-  DropdownTrigger,
-} from "@nextui-org/react";
+import { DropdownMenu } from "@radix-ui/react-dropdown-menu";
 import { signIn, signOut, useSession } from "next-auth/react";
-import { FiChevronDown, FiMenu, FiUser } from "react-icons/fi";
-import { useEffect, useState } from "react";
 import Image from "next/image";
+import { useEffect, useState } from "react";
+import { FiMenu, FiUser } from "react-icons/fi";
+import ToggleThemeMode from "../toogleThemeMode";
+import { Button } from "../ui/button";
+import {
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuTrigger,
+} from "../ui/dropdown-menu";
 
 export default function Header() {
   const { data: session } = useSession();
@@ -35,7 +36,6 @@ export default function Header() {
           Alpha
         </div>
       </div>
-
       {!!session ? (
         <DropdownUser />
       ) : (
@@ -49,12 +49,13 @@ export default function Header() {
               query: { callbackUrl: callbackUrl },
             }}
           >
-            <Button variant="bordered" color="primary">
+            <Button variant="outline" color="primary">
               Sign Up
             </Button>
           </Link>
         </div>
       )}
+      <ToggleThemeMode />
     </header>
   );
 }
@@ -63,9 +64,9 @@ function DropdownUser() {
   const { data: session } = useSession();
 
   return (
-    <Dropdown showArrow>
-      <DropdownTrigger>
-        <Button color="primary" variant="bordered" className="flex gap-2">
+    <DropdownMenu>
+      <DropdownMenuTrigger asChild>
+        <Button color="primary" variant="outline" className="flex gap-2">
           {!!session?.user?.image ? (
             <Image
               src={session?.user?.image}
@@ -80,15 +81,13 @@ function DropdownUser() {
 
           <span>{session?.user?.name ?? "Usuário"}</span>
         </Button>
-      </DropdownTrigger>
-      <DropdownMenu>
-        <DropdownSection>
-          <DropdownItem>Profile</DropdownItem>
-        </DropdownSection>
-        <DropdownItem color="danger" onClick={() => signOut()}>
+      </DropdownMenuTrigger>
+      <DropdownMenuContent>
+        <DropdownMenuLabel>Profile</DropdownMenuLabel>
+        <DropdownMenuItem color="danger" onClick={() => signOut()}>
           Logout
-        </DropdownItem>
-      </DropdownMenu>
-    </Dropdown>
+        </DropdownMenuItem>
+      </DropdownMenuContent>
+    </DropdownMenu>
   );
 }

@@ -4,7 +4,7 @@ import type { Metadata } from "next";
 import { Open_Sans, Poppins } from "next/font/google";
 import "./globals.css";
 import Providers from "./providers";
-import Header from "./_components/header";
+import Header from "@/components/header";
 
 const poppins = Poppins({
   weight: ["400", "600", "700"],
@@ -39,6 +39,7 @@ export default function RootLayout({
     <html
       lang={locale}
       className={clsx(poppins.variable, openSans.variable, "light")}
+      suppressHydrationWarning
     >
       <body>
         <Providers>

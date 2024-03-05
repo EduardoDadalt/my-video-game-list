@@ -1,19 +1,20 @@
 "use client";
 
-import { api } from "@/trpc/react";
+import { Button } from "@/components/ui/button";
 import {
-  Button,
-  Input,
-  Modal,
-  ModalBody,
-  ModalContent,
-  ModalFooter,
-  ModalHeader,
-  Select,
-  SelectItem,
-  useDisclosure,
-} from "@nextui-org/react";
+  Dialog,
+  DialogClose,
+  DialogContent,
+  DialogFooter,
+  DialogHeader,
+  DialogTrigger,
+} from "@/components/ui/dialog";
+import { Input } from "@/components/ui/input";
+import { Select, SelectItem, SelectValue } from "@/components/ui/select";
+import { api } from "@/trpc/react";
+
 import { StatusRating } from "@prisma/client";
+import { SelectContent, SelectTrigger } from "@radix-ui/react-select";
 import { useState, type ReactNode } from "react";
 
 type RatingInfo = {
@@ -31,8 +32,6 @@ export default function AddGameToList({
   initialRating?: RatingInfo;
   children: ReactNode;
 }) {
-  const { isOpen, onOpen, onOpenChange } = useDisclosure();
-
   const [ratingInfo, setRatingInfo] = useState<RatingInfo>(
     initialRating ?? {
       rating: 0,
@@ -44,86 +43,87 @@ export default function AddGameToList({
   const addGameToList = api.game.addToList.useMutation();
 
   return (
-    <>
-      <Button color="primary" onClick={onOpen} className="h-auto">
-        {children}
-      </Button>
-      <Modal isOpen={isOpen} onOpenChange={onOpenChange} placement="center">
-        <ModalContent>
-          {(onClose) => (
-            <>
-              <ModalHeader className="flex flex-col gap-1">
-                Modal Title
-              </ModalHeader>
-              <ModalBody>
-                <form className="flex flex-col gap-2">
-                  <Select
-                    label="Select rating"
-                    placeholder="Rating"
-                    value={ratingInfo.rating.toString()}
-                    onChange={(e) =>
-                      setRatingInfo({
-                        ...ratingInfo,
-                        rating: Number(e.target.value),
-                      })
-                    }
-                  >
-                    {Array.from({ length: 10 }, (_, i) => i + 1)
-                      .reverse()
-                      .map((i) => (
-                        <SelectItem key={i} value={i.toString()}>
-                          {i.toString()}
-                        </SelectItem>
-                      ))}
-                  </Select>
-                  <Select
-                    label="Select status"
-                    placeholder="Status"
-                    onChange={(e) =>
-                      setRatingInfo({
-                        ...ratingInfo,
-                        status: String(e.target.value) as StatusRating,
-                      })
-                    }
-                  >
-                    {Object.values(StatusRating).map((i) => (
-                      <SelectItem key={i} value={i}>
-                        {i}
-                      </SelectItem>
-                    ))}
-                  </Select>
-                  <Input
-                    label="Enter hours played"
-                    placeholder="Hours played"
-                    type="number"
-                    min={0}
-                    onChange={(e) =>
-                      setRatingInfo({
-                        ...ratingInfo,
-                        hoursPlayed: Number(e.target.value),
-                      })
-                    }
-                  />
-                </form>
-              </ModalBody>
-              <ModalFooter>
-                <Button color="danger" variant="light" onPress={onClose}>
-                  Fechar
-                </Button>
-                <Button
-                  color="primary"
-                  onPress={() => {
-                    addGameToList.mutate({ gameId, ...ratingInfo });
-                    onClose();
-                  }}
-                >
-                  Salvar
-                </Button>
-              </ModalFooter>
-            </>
-          )}
-        </ModalContent>
-      </Modal>
-    </>
+    <Dialog>
+      <DialogTrigger asChild>
+        <Button color="primary" className="h-auto">
+          {children}
+        </Button>
+      </DialogTrigger>
+      <DialogContent>
+        <DialogHeader className="flex flex-col gap-1">Modal Title</DialogHeader>
+        <div>
+          <form className="flex flex-col gap-2">
+            <Select
+              // label="Select rating"
+              // placeholder="Rating"
+              onValueChange={(value) =>
+                setRatingInfo({
+                  ...ratingInfo,
+                  rating: Number(value),
+                })
+              }
+            >
+              <SelectTrigger>
+                <SelectValue placeholder="Rating">
+                  {ratingInfo.rating}
+                </SelectValue>
+              </SelectTrigger>
+              <SelectContent>
+                {Array.from({ length: 10 }, (_, i) => i + 1)
+                  .reverse()
+                  .map((i) => (
+                    <SelectItem key={i} value={i.toString()}>
+                      {i.toString()}
+                    </SelectItem>
+                  ))}
+              </SelectContent>
+            </Select>
+            <Select
+            // label="Select status"
+            // placeholder="Status"
+            // onChange={(e) =>
+            //   setRatingInfo({
+            //     ...ratingInfo,
+            //     status: String(e.target.value) as StatusRating,
+            //   })
+            // }
+            >
+              <SelectContent>
+                {Object.values(StatusRating).map((i) => (
+                  <SelectItem key={i} value={i}>
+                    {i}
+                  </SelectItem>
+                ))}{" "}
+              </SelectContent>
+            </Select>
+            <Input
+              // label="Enter hours played"
+              placeholder="Hours played"
+              type="number"
+              min={0}
+              onChange={(e) =>
+                setRatingInfo({
+                  ...ratingInfo,
+                  hoursPlayed: Number(e.target.value),
+                })
+              }
+            />
+          </form>
+        </div>
+        <DialogFooter>
+          <Button variant="destructive">Fechar</Button>
+          <DialogClose asChild>
+            <Button
+              color="primary"
+              onClick={() => {
+                addGameToList.mutate({ gameId, ...ratingInfo });
+              }}
+            >
+              Salvar
+            </Button>
+          </DialogClose>
+        </DialogFooter>
+      </DialogContent>
+    </Dialog>
   );
 }

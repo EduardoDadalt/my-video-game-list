@@ -1,5 +1,4 @@
 import { getDictionary } from "@/dictionaries/dictionaries";
-import RegisterForm from "./registerForm";
 
 export default async function RegisterPage({
   params: { locale },
@@ -12,7 +11,6 @@ export default async function RegisterPage({
       <h1 className="text-center font-display text-2xl font-bold">
         {dictionary.auth.register.title}
       </h1>
-      <RegisterForm dictionary={dictionary} locale={locale} />
     </>
   );
 }

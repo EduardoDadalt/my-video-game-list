@@ -1,13 +1,13 @@
 "use client";
 
+import { Button } from "@/components/ui/button";
 import { type Dictionary } from "@/dictionaries/Dictionary";
-import { Button } from "@nextui-org/react";
 import Link from "next/link";
 import { type ReactNode, useEffect, useState } from "react";
 import { FiChevronDown, FiChevronUp } from "react-icons/fi";
 function DataInfo({ title, data }: { title: string; data: ReactNode }) {
   return (
-    <div className="flex flex-row items-center justify-between text-sm gap-2 p-1">
+    <div className="flex flex-row items-center justify-between gap-2 p-1 text-sm">
       <span className="font-bold">{title}:</span>
       <span>{data}</span>
     </div>
@@ -98,7 +98,7 @@ export default function GameInformation({
         }
       />
       <Button
-        className="sm:hidden w-full flex items-center justify-center"
+        className="flex w-full items-center justify-center sm:hidden"
         onClick={close}
       >
         <FiChevronUp size={24} /> {dictionary.gamePage.showLess}
@@ -106,7 +106,7 @@ export default function GameInformation({
     </div>
   ) : (
     <Button
-      className="sm:hidden w-full flex items-center justify-center"
+      className="flex w-full items-center justify-center sm:hidden"
       onClick={open}
     >
       <FiChevronDown size={24} /> {dictionary.gamePage.showMore}

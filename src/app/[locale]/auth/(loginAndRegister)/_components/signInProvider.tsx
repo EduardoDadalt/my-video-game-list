@@ -1,5 +1,5 @@
 "use client";
-import { Button } from "@nextui-org/react";
+import { Button } from "@/components/ui/button";
 import clsx from "clsx";
 import { type BuiltInProviderType } from "next-auth/providers/index";
 import { type LiteralUnion, signIn } from "next-auth/react";

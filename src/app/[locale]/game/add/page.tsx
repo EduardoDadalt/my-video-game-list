@@ -104,25 +104,6 @@ export default function AddGamePage() {
           />
           <FormField
             control={form.control}
-            name="releaseDate"
-            rules={{ required: true }}
-            render={({ field: { value, ...field } }) => (
-              <FormItem>
-                <FormLabel>Release Date</FormLabel>
-                <FormControl>
-                  <Input
-                    type="date"
-                    placeholder="Game Name"
-                    value={String(value)}
-                    {...field}
-                  />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
             name="categories"
             render={({ field }) => (
               <FormItem className="flex flex-col">

@@ -3,19 +3,33 @@
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
-  DialogClose,
   DialogContent,
   DialogFooter,
   DialogHeader,
-  DialogTrigger,
+  DialogTrigger
 } from "@/components/ui/dialog";
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage
+} from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { Select, SelectItem, SelectValue } from "@/components/ui/select";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { addGameSchema } from "@/server/api/routers/game/addGameSchema";
 import { api } from "@/trpc/react";
-
+import { zodResolver } from "@hookform/resolvers/zod";
 import { StatusRating } from "@prisma/client";
-import { SelectContent, SelectTrigger } from "@radix-ui/react-select";
-import { useState, type ReactNode } from "react";
+import { type ReactNode } from "react";
+import { useForm } from "react-hook-form";
 
 type RatingInfo = {
   rating: number;
@@ -25,23 +39,27 @@ type RatingInfo = {
 
 export default function AddGameToList({
   gameId,
-  initialRating,
+  initialRating = {
+    rating: 0,
+    status: StatusRating.PlanToPlay,
+    hoursPlayed: 0,
+  },
   children,
 }: {
   gameId: string;
   initialRating?: RatingInfo;
   children: ReactNode;
 }) {
-  const [ratingInfo, setRatingInfo] = useState<RatingInfo>(
-    initialRating ?? {
-      rating: 0,
-      status: StatusRating.Playing,
-      hoursPlayed: 0,
-    },
-  );
+  const form = useForm<RatingInfo>({
+    resolver: zodResolver(addGameSchema),
+    defaultValues: initialRating,
+  });
 
   const addGameToList = api.game.addToList.useMutation();
 
+  const onSubmit = (data: RatingInfo) => {
+    addGameToList.mutate({ gameId, ...data });
+  };
   return (
     <Dialog>
       <DialogTrigger asChild>
@@ -50,78 +68,90 @@ export default function AddGameToList({
         </Button>
       </DialogTrigger>
       <DialogContent>
-        <DialogHeader className="flex flex-col gap-1">Modal Title</DialogHeader>
+        <DialogHeader className="flex flex-col gap-1">
+          Add game to List
+        </DialogHeader>
         <div>
-          <form className="flex flex-col gap-2">
-            <Select
-              // label="Select rating"
-              // placeholder="Rating"
-              onValueChange={(value) =>
-                setRatingInfo({
-                  ...ratingInfo,
-                  rating: Number(value),
-                })
-              }
+          <Form {...form}>
+            <form
+              className="flex flex-col gap-2"
+              onSubmit={form.handleSubmit(onSubmit)}
             >
-              <SelectTrigger>
-                <SelectValue placeholder="Rating">
-                  {ratingInfo.rating}
-                </SelectValue>
-              </SelectTrigger>
-              <SelectContent>
-                {Array.from({ length: 10 }, (_, i) => i + 1)
-                  .reverse()
-                  .map((i) => (
-                    <SelectItem key={i} value={i.toString()}>
-                      {i.toString()}
-                    </SelectItem>
-                  ))}
-              </SelectContent>
-            </Select>
-            <Select
-            // label="Select status"
-            // placeholder="Status"
-            // onChange={(e) =>
-            //   setRatingInfo({
-            //     ...ratingInfo,
-            //     status: String(e.target.value) as StatusRating,
-            //   })
-            // }
-            >
-              <SelectContent>
-                {Object.values(StatusRating).map((i) => (
-                  <SelectItem key={i} value={i}>
-                    {i}
-                  </SelectItem>
-                ))}{" "}
-              </SelectContent>
-            </Select>
-            <Input
-              // label="Enter hours played"
-              placeholder="Hours played"
-              type="number"
-              min={0}
-              onChange={(e) =>
-                setRatingInfo({
-                  ...ratingInfo,
-                  hoursPlayed: Number(e.target.value),
-                })
-              }
-            />
-          </form>
+              <FormField
+                control={form.control}
+                name="rating"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Rating</FormLabel>
+                    <Select
+                      onValueChange={field.onChange}
+                      defaultValue={field.value?.toString()}
+                    >
+                      <FormControl>
+                        <SelectTrigger>
+                          <SelectValue placeholder="Rating" />
+                        </SelectTrigger>
+                      </FormControl>
+                      <SelectContent>
+                        {Array.from({ length: 10 }, (_, i) => i + 1)
+                          .reverse()
+                          .map((i) => (
+                            <SelectItem key={i} value={i.toString()}>
+                              {i.toString()}
+                            </SelectItem>
+                          ))}
+                      </SelectContent>
+                    </Select>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="status"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Status</FormLabel>
+                    <Select
+                      onValueChange={field.onChange}
+                      defaultValue={field.value?.toString()}
+                    >
+                      <FormControl>
+                        <SelectTrigger>
+                          <SelectValue placeholder="Status" />
+                        </SelectTrigger>
+                      </FormControl>
+                      <SelectContent>
+                        {Object.values(StatusRating).map((status) => (
+                          <SelectItem key={status} value={status}>
+                            {status}
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="hoursPlayed"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Hours played</FormLabel>
+                    <Input {...field} type="number" />
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            </form>
+          </Form>
         </div>
         <DialogFooter>
-          <Button variant="destructive">Fechar</Button>
-          <DialogClose asChild>
-            <Button
-              color="primary"
-              onClick={() => {
-                addGameToList.mutate({ gameId, ...ratingInfo });
-              }}
-            >
-              Salvar
-            </Button>
-          </DialogClose>
+          <Button variant="ghost">Fechar</Button>
+          <Button color="primary" type="submit">
+            Salvar
+          </Button>
         </DialogFooter>
       </DialogContent>
     </Dialog>

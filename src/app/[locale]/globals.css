@@ -3,12 +3,11 @@
 @tailwind utilities;
 
 html,
-body,
-.nextui {
-  @apply m-0 h-full w-full p-0 font-body;
+body {
+  @apply font-body m-0 h-full w-full p-0;
 }
 
-.nextui {
+body {
   @apply flex flex-col;
 }
 

@@ -6,6 +6,7 @@ import {
   publicProcedure,
 } from "@/server/api/trpc";
 import { StatusRating } from "@prisma/client";
+import { addGameProcedure } from "./addGame";
 
 export const gameRouter = createTRPCRouter({
   findAll: publicProcedure.input(z.object({})).query((_) => {
@@ -33,11 +34,12 @@ export const gameRouter = createTRPCRouter({
         },
         input: { gameId, rating, status, hoursPlayed },
       }) => {
-        console.log(id);
         await db.rating.create({
           data: { userId: id, gameId: gameId, rating, status, hoursPlayed },
         });
         return { success: true };
       },
     ),
+
+  addGame: addGameProcedure,
 });

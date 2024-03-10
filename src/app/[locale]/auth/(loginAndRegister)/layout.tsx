@@ -18,7 +18,6 @@ export default async function LayoutLoginAndRegister({
           {dictionary.demo}
         </div>
         {children}
-        <hr className="my-2" />
         <OAuthProviders locale={locale} />
         <Suspense>
           <OnAuthRedirect />

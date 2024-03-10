@@ -36,26 +36,28 @@ export default function Header() {
           Alpha
         </div>
       </div>
-      {!!session ? (
-        <DropdownUser />
-      ) : (
-        <div className="flex gap-2">
-          <Button onClick={() => signIn()} color="primary">
-            Login
-          </Button>
-          <Link
-            href={{
-              pathname: "/auth/register",
-              query: { callbackUrl: callbackUrl },
-            }}
-          >
-            <Button variant="outline" color="primary">
-              Sign Up
+      <div className="flex flex-row gap-2">
+        {!!session ? (
+          <DropdownUser />
+        ) : (
+          <>
+            <Button onClick={() => signIn()} color="primary">
+              Login
             </Button>
-          </Link>
-        </div>
-      )}
-      <ToggleThemeMode />
+            <Link
+              href={{
+                pathname: "/auth/register",
+                query: { callbackUrl: callbackUrl },
+              }}
+            >
+              <Button variant="outline" color="primary">
+                Sign Up
+              </Button>
+            </Link>
+          </>
+        )}
+        <ToggleThemeMode />
+      </div>
     </header>
   );
 }

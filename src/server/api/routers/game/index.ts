@@ -34,7 +34,6 @@ export const gameRouter = createTRPCRouter({
         },
         input: { gameId, rating, status, hoursPlayed },
       }) => {
-        console.log(id);
         await db.rating.create({
           data: { userId: id, gameId: gameId, rating, status, hoursPlayed },
         });

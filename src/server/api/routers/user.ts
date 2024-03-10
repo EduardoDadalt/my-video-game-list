@@ -1,9 +1,9 @@
-import { object, z } from "zod";
-import { createTRPCRouter, publicProcedure } from "../trpc";
-import { getDictionary } from "@/dictionaries/dictionaries";
 import { getRegisterUserSchema } from "@/app/[locale]/auth/(loginAndRegister)/register/getRegisterUserSchema";
+import { getDictionary } from "@/dictionaries/dictionaries";
 import { hashPassword } from "@/util/cripto";
 import { Prisma } from "@prisma/client";
+import { z } from "zod";
+import { createTRPCRouter, publicProcedure } from "../trpc";
 
 export const userRouter = createTRPCRouter({
   register: publicProcedure

@@ -6,7 +6,7 @@ import {
   DialogContent,
   DialogFooter,
   DialogHeader,
-  DialogTrigger
+  DialogTrigger,
 } from "@/components/ui/dialog";
 import {
   Form,
@@ -14,7 +14,7 @@ import {
   FormField,
   FormItem,
   FormLabel,
-  FormMessage
+  FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import {
@@ -24,59 +24,54 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { addGameSchema } from "@/server/api/routers/game/addGameSchema";
+import {
+  type AddToListInput,
+  addToListSchema,
+} from "@/server/api/routers/game/schemas/addToListSchema";
 import { api } from "@/trpc/react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { StatusRating } from "@prisma/client";
-import { type ReactNode } from "react";
+import { useState, type ReactNode } from "react";
 import { useForm } from "react-hook-form";
 
-type RatingInfo = {
-  rating: number;
-  status: StatusRating;
-  hoursPlayed: number;
-};
-
 export default function AddGameToList({
-  gameId,
-  initialRating = {
-    rating: 0,
-    status: StatusRating.PlanToPlay,
-    hoursPlayed: 0,
-  },
   children,
-}: {
-  gameId: string;
-  initialRating?: RatingInfo;
+  ...initialRating
+}: AddToListInput & {
   children: ReactNode;
 }) {
-  const form = useForm<RatingInfo>({
-    resolver: zodResolver(addGameSchema),
+  const [showDialog, setShowDialog] = useState(false);
+  const form = useForm<AddToListInput>({
+    resolver: zodResolver(addToListSchema),
     defaultValues: initialRating,
   });
 
   const addGameToList = api.game.addToList.useMutation();
 
-  const onSubmit = (data: RatingInfo) => {
-    addGameToList.mutate({ gameId, ...data });
+  const onSubmit = async (data: AddToListInput) => {
+    await addGameToList.mutateAsync({ ...data });
+    closeDialog();
   };
+  const openDialog = () => setShowDialog(true);
+  const closeDialog = () => setShowDialog(false);
+
   return (
-    <Dialog>
+    <Dialog open={showDialog} onOpenChange={setShowDialog}>
       <DialogTrigger asChild>
-        <Button color="primary" className="h-auto">
+        <Button color="primary" className="h-auto" onClick={openDialog}>
           {children}
         </Button>
       </DialogTrigger>
       <DialogContent>
-        <DialogHeader className="flex flex-col gap-1">
-          Add game to List
-        </DialogHeader>
-        <div>
-          <Form {...form}>
-            <form
-              className="flex flex-col gap-2"
-              onSubmit={form.handleSubmit(onSubmit)}
-            >
+        <Form {...form}>
+          <form
+            className="flex flex-col gap-2"
+            onSubmit={form.handleSubmit(onSubmit, console.error)}
+          >
+            <DialogHeader className="flex flex-col gap-1">
+              Add game to List
+            </DialogHeader>
+            <div>
               <FormField
                 control={form.control}
                 name="rating"
@@ -84,7 +79,9 @@ export default function AddGameToList({
                   <FormItem>
                     <FormLabel>Rating</FormLabel>
                     <Select
-                      onValueChange={field.onChange}
+                      onValueChange={(newValue) =>
+                        field.onChange(Number(newValue))
+                      }
                       defaultValue={field.value?.toString()}
                     >
                       <FormControl>
@@ -144,15 +141,12 @@ export default function AddGameToList({
                   </FormItem>
                 )}
               />
-            </form>
-          </Form>
-        </div>
-        <DialogFooter>
-          <Button variant="ghost">Fechar</Button>
-          <Button color="primary" type="submit">
-            Salvar
-          </Button>
-        </DialogFooter>
+            </div>
+            <DialogFooter>
+              <Button type="submit">Salvar</Button>
+            </DialogFooter>
+          </form>
+        </Form>
       </DialogContent>
     </Dialog>
   );

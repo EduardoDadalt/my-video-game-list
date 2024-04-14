@@ -25,7 +25,7 @@ import {
 import { Textarea } from "@/components/ui/textarea";
 import { cn } from "@/lib/utils";
 import { type AddGameInput } from "@/server/api/routers/game/addGame";
-import { addGameSchema } from "@/server/api/routers/game/addGameSchema";
+import { addGameSchema } from "@/server/api/routers/game/schemas/addGameSchema";
 import { api } from "@/trpc/react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { CaretSortIcon } from "@radix-ui/react-icons";

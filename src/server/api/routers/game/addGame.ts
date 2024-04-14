@@ -1,6 +1,6 @@
 import { type z } from "zod";
 import { protectedProcedure } from "../../trpc";
-import { addGameSchema } from "./addGameSchema";
+import { addGameSchema } from "./schemas/addGameSchema";
 
 export type AddGameInput = z.infer<typeof addGameSchema>;
 
